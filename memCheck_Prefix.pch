@@ -1,0 +1,13 @@
+//
+// Prefix header for all source files of the 'inFoundation' target in the 'inFoundation' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+
+	#define MEMTEST_ON
+
+#endif
+
+#import "NSObject+memCheck.h"
