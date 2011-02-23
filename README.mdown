@@ -1,0 +1,131 @@
+MemCheck helps to find memory leaks in your iOS applications. It can register alloc, retain and release call for NS-objects and show detail information in console.
+
+### Connect library
+
+Add 6 files to your project:
+
+* NSMemCheckObject.h
+* NSMemCheckObject.m
+* NSMutableArray+MemCheck.h
+* NSMutableArray+MemCheck.m
+* NSObject+MemCheck.h
+* NSObject+MemCheck.m
+
+add in tail of your pch file
+    #define MEMTEST_ON
+
+add in the top of the application: didFinishLaunchingWithOptions: function
+
+    #ifdef MEMTEST_ON
+    [NSObject turnMemCheckOn];
+    #endif
+
+### Using
+
+When you app is running in any moment you can press pause button and print in the Xcode's console:
+
+**po [memData allMem]**
+
+return output like that
+    14 items
+    (
+    "2011-02-23 06:47:04 +0000 memCheckObject 0x4b45840 object 0x4b45530 stack 0x4b45a00 NSCountedSet",
+    ..
+    }
+
+14 is all registered objects, which exist in memory at this moment. The list starts with last allocated object.
+
+address after memCheckObject point to wrapper object
+
+address after object point to allocated object
+
+address after stack point to alloc callstack
+
+NSCountedSet is allocated object's class
+
+**po [memData top:N]**
+
+return only N last allocated objects
+
+**po *address_of_object* **
+
+display defaul object's description
+
+**po *address_of_callstack* **
+
+display stack like that
+
+    <_NSCallStackArray 0x4b43750>(
+    0   CoreFoundation                      0x00da9be9 __exceptionPreprocess + 185,
+    1   libobjc.A.dylib                     0x00efe5c2 objc_exception_throw + 47,
+    2   inFoundation                        0x00002796 +[NSObject(memCheck) myAllocFunc] + 918,
+    3   inFoundation                        0x00001c81 -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 161,
+    4   UIKit                               0x002b31fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163,
+    ...
+    )
+
+**po [address_of_wrapper_object history]**
+
+display callstacks for alloc, retain and release functions, ordered by date. It shows like that:
+
+    ALLOC:
+    2011-02-23 06:26:56 +0000
+    (
+	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
+	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
+	2   memCheck                            0x0000310f +[NSObject(memCheck) myAllocFunc] + 831
+	3   memCheck                            0x000024d2 -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 98
+	4   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
+    ...
+    )
+    RETAIN:
+    2011-02-23 06:26:56 +0000
+    (
+	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
+	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
+	2   memCheck                            0x000034cf -[NSObject(memCheck) myRetainFunc] + 335
+	3   CoreFoundation                      0x00cbf0bc CFRetain + 92
+	4   CoreFoundation                      0x00da5db5 +[__NSArrayI __new::] + 117
+	5   CoreFoundation                      0x00d188a3 +[NSArray arrayWithObject:] + 67
+	6   memCheck                            0x00002508 -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 152
+	7   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
+    ...
+    )
+    RETAIN:
+    2011-02-23 06:26:56 +0000
+    (
+	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
+	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
+	2   memCheck                            0x000034cf -[NSObject(memCheck) myRetainFunc] + 335
+	3   memCheck                            0x00002538 -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 200
+	4   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
+    ...
+    )
+    RELEASE:
+    2011-02-23 06:26:56 +0000
+    (
+	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
+	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
+	2   memCheck                            0x000037ee -[NSObject(memCheck) myReleaseFunc] + 302
+	3   memCheck                            0x0000258d -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 285
+	4   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
+    ...
+    )
+    RETAIN:
+    2011-02-23 06:26:56 +0000
+    (
+	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
+	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
+	2   memCheck                            0x000034cf -[NSObject(memCheck) myRetainFunc] + 335
+	3   CoreFoundation                      0x00cbf0bc CFRetain + 92
+	4   CoreFoundation                      0x00da5db5 +[__NSArrayI __new::] + 117
+	5   CoreFoundation                      0x00d188a3 +[NSArray arrayWithObject:] + 67
+	6   memCheck                            0x000025ae -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 318
+	7   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
+    ...
+    )
+
+**po [*address_of_wrapper_object* retains] and po [*address_of_wrapper_object* releases]**
+
+return callstacks for all retain or release calls, started with last.
+
