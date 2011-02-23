@@ -64,7 +64,7 @@ display stack like that
     ...
     )
 
-**po [address_of_wrapper_object history]**
+**po [*address_of_wrapper_object* history]**
 
 display callstacks for alloc, retain and release functions, ordered by date. It shows like that:
 
