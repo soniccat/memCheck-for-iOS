@@ -121,7 +121,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 			}
 			@catch (NSException * e) 
 			{
-				addObj.callStack = [e callStackSymbols];
+				addObj.allocCallStack = [e callStackSymbols];
 			}
 			ALLOC_METHOD_EXCHANGE;
 		}

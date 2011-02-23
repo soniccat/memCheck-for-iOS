@@ -44,7 +44,8 @@
 
 @synthesize pointerValue;
 @synthesize className;
-@synthesize callStack;
+@synthesize allocDate;
+@synthesize allocCallStack;
 @synthesize retainCallStackArray;
 @synthesize releaseCallStackArray;
 
@@ -54,6 +55,7 @@
 	{
 		self.pointerValue = obj;
 		self.className = [[obj class] description];
+		self.allocDate = [NSDate date];
 		self.retainCallStackArray = [NSMutableArray array];
 		self.releaseCallStackArray = [NSMutableArray array];
 	}
@@ -63,16 +65,18 @@
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"memCheckObject %p object %p stack %p %@", self, self.pointerValue, self.callStack, self.className];
+	return [NSString stringWithFormat:@"%@ memCheckObject %p object %p stack %p %@", self.allocDate, self, self.pointerValue, self.allocCallStack, self.className];
 }
 
 - (void)dealloc
 {
 	self.pointerValue = nil;
 	self.className = nil;
-	self.callStack = nil;
+	self.allocCallStack = nil;
 	self.retainCallStackArray = nil;
 	self.releaseCallStackArray = nil;
+	self.allocDate = nil;
+	self.allocCallStack = nil;
 	
 	[super dealloc];
 }
@@ -105,8 +109,8 @@
 
 - (NSString*) history
 {
-	NSMutableString* outString = [NSMutableString stringWithString:@"ALLOC:\n"];
-	[outString appendFormat:@"%@\n",self.callStack];
+	NSMutableString* outString = [NSMutableString stringWithFormat:@"ALLOC:\n%@\n",self.allocDate];
+	[outString appendFormat:@"%@\n",self.allocCallStack];
 	
 	int retainCount = [self.retainCallStackArray count];
 	int releaseCount = [self.releaseCallStackArray count];

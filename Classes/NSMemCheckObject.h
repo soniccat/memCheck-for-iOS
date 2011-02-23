@@ -27,14 +27,16 @@
 	id pointerValue;
 	NSString* className;
 	
-	NSArray* callStack; //alloc callStack
+	NSDate* allocDate;
+	NSArray* allocCallStack;
 	NSMutableArray* retainCallStackArray;	//contains NSMemCheckRetainReleaseInfo
 	NSMutableArray* releaseCallStackArray;	//contains NSMemCheckRetainReleaseInfo
 }
 
 @property(nonatomic,assign) id pointerValue;
 @property(nonatomic,retain) NSString* className;
-@property(nonatomic,retain) NSArray* callStack;
+@property(nonatomic,retain) NSDate* allocDate;
+@property(nonatomic,retain) NSArray* allocCallStack;
 @property(nonatomic,retain) NSMutableArray* retainCallStackArray;
 @property(nonatomic,retain) NSMutableArray* releaseCallStackArray;
 
