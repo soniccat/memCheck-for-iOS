@@ -35,7 +35,9 @@
 
 	//For test
 	NSObject* obj = [[NSObject alloc] init];
-	NSArray* arr = [[NSArray arrayWithObject:obj] retain];
+	NSArray* arr = [NSArray arrayWithObject:obj];
+	
+	NSLog(@"test %p", arr);
 	
 	[obj retain];
 	
@@ -44,14 +46,20 @@
 	
 	[oo release];
 	
-	NSArray* arr2 = [[NSArray arrayWithObject:obj] retain];
+
+	NSArray* arr2 = [NSArray arrayWithObject:obj];
 	
-	NSLog(@"test to remove %p %p", obj, arr);
+	NSLog(@"test2 %p", arr2);
+	
+	NSMutableArray* arr3 = [NSMutableArray arrayWithObject:obj];
+	NSLog(@"test3 %p", arr3);
+	
+	NSMutableArray* arr4 = [NSMutableArray arrayWithObject:obj];
 	
     // Add the view controller's view to the window and display.
     [self.window addSubview:viewController.view];
     [self.window makeKeyAndVisible];
-
+	
     return YES;
 }
 

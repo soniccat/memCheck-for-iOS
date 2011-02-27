@@ -72,7 +72,6 @@
 {
 	self.pointerValue = nil;
 	self.className = nil;
-	self.allocCallStack = nil;
 	self.retainCallStackArray = nil;
 	self.releaseCallStackArray = nil;
 	self.allocDate = nil;
