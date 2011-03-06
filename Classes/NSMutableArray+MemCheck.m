@@ -10,6 +10,8 @@
 
 #import "NSMutableArray+MemCheck.h"
 
+extern NSMutableArray* heaps;
+
 @implementation NSMutableArray(MemCheck)
 
 - (NSMemCheckObject*) memCheckObjectByPointer:(id)obj
@@ -37,6 +39,56 @@
 		[outString appendFormat:@"%@\n",[[self objectAtIndex:i] description]];
 	
 	return outString;
+}
+
+- (void) markHeap
+{
+	@synchronized( [NSObject class] )
+	{
+		[heaps addObject:[NSDate date]];
+	}
+}
+
+- (NSArray*) objectsForHeap:(NSInteger)index
+{
+	if( index < 0 || index >= [heaps count] )
+		return [NSString stringWithFormat: @"Wrong heap index, now have %d heaps", [heaps count]];
+	
+	NSMutableArray* returnArray = [NSMutableArray array];
+	
+	NSDate* currentDate = [heaps objectAtIndex:index];
+	NSDate* nextDate = nil;
+	if( index+1 < [heaps count] )
+		nextDate = [heaps objectAtIndex:index+1];
+	
+	for( NSMemCheckObject* item in self )
+	{
+		if( [currentDate compare:item.allocDate] != NSOrderedDescending && 
+		    (nextDate == nil || [nextDate compare:item.allocDate] != NSOrderedAscending) )
+		{
+			[returnArray addObject:item];
+		}
+	}
+	
+	return returnArray;
+}
+
+- (NSString*) showHeaps
+{
+	if( ![heaps count] )
+		return @"No heaps, print \"po [heaps markHeap]\" to create one";
+	
+	NSMutableString* returnString = [NSMutableString string];
+	
+	NSArray* objects;
+	for( int i=0; i<[heaps count]; ++i)
+	{
+		objects = [self objectsForHeap:i];
+		
+		[returnString appendString:[NSString stringWithFormat:@"%d: %d objects\n",i,[objects count]]];
+	}
+	
+	return returnString;
 }
 
 @end

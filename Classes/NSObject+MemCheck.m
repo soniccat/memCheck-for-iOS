@@ -17,6 +17,7 @@
 #import "NSMutableArray+MemCheck.h"
 
 NSMutableArray* memData;
+NSMutableArray* heaps;
 
 Method classAllocMethod;
 IMP classAllocImp;
@@ -56,6 +57,9 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 	if( memData == nil  )
 		memData = [[NSMutableArray allocWithZone:nil] init];
 	
+	if( heaps == nil )
+		heaps = [[NSMutableArray allocWithZone:nil] init];
+	
 	//alloc
 	classAllocMethod = class_getClassMethod([NSObject class], @selector(alloc) );
 	classAllocImp = method_getImplementation(classAllocMethod);
@@ -88,6 +92,8 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 	method_exchangeImplementations(classDeallocMethod, classMyDeallocMethod);
 	RETAIN_METHOD_EXCHANGE;
 	method_exchangeImplementations(classReleaseMethod, classMyReleaseMethod);
+	
+	[memData markHeap];
 }
 
 + (id) myAllocFunc
@@ -109,10 +115,13 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 		if( !found )
 		{
 			ALLOC_METHOD_EXCHANGE;
+			NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+			
 			NSMemCheckObject* addObj = [[[NSMemCheckObject alloc] initWithPointer:newPt] autorelease];
 			[memData insertObject:addObj atIndex:0];
 			
 			//hack to get call stack
+			
 			@try 
 			{
 				@throw [NSException exceptionWithName:@"memTestException" 
@@ -123,6 +132,8 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 			{
 				addObj.allocCallStack = [e callStackSymbols];
 			}
+			
+			[pool release];
 			ALLOC_METHOD_EXCHANGE;
 		}
 	}
@@ -168,6 +179,8 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 		//hack to get call stack
 		if( addObj )
 		{
+			NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+			
 			@try 
 			{
 				@throw [NSException exceptionWithName:@"memTestException" 
@@ -176,6 +189,8 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 			}
 			@catch (NSException * e) 
 			{
+				
+				
 				NSMemCheckRetainReleaseInfo* info = [[NSMemCheckRetainReleaseInfo alloc] init];
 				info.date = [NSDate date];
 				info.callStack = [e callStackSymbols];
@@ -184,6 +199,8 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 				
 				[info release];
 			}
+			
+			[pool release];
 		}
 		
 		if( needAllocExchange )
@@ -211,6 +228,8 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 		//hack to get call stack
 		if( addObj )
 		{
+			NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+			
 			@try 
 			{
 				@throw [NSException exceptionWithName:@"memTestException" 
@@ -227,6 +246,8 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 				
 				[info release];
 			}
+			
+			[pool release];
 		}
 		
 		if( needAllocExchange )

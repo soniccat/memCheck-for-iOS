@@ -120,7 +120,7 @@
 	NSMemCheckRetainReleaseInfo* releaseInfo;
 	NSMemCheckRetainReleaseInfo* retainInfo;
 	
-	while (retainIndex < retainCount && releaseIndex < retainCount) 
+	while (retainIndex < retainCount || releaseIndex < releaseCount) 
 	{
 		if( releaseIndex < releaseCount )
 			releaseInfo = [self.releaseCallStackArray objectAtIndex:releaseIndex];

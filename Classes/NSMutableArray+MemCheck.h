@@ -13,9 +13,14 @@
 
 @interface NSMutableArray(MemCheck)
 
+//for memData
 - (NSString*) allMem;
 - (NSString*) top:(NSInteger)top;
 - (NSMemCheckObject*) memCheckObjectByPointer:(id)obj;
+
+- (NSArray*) objectsForHeap:(NSInteger)index;
+- (void) markHeap;
+- (NSString*) showHeaps;
 
 @end
 
