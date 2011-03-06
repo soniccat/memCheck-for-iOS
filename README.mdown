@@ -129,3 +129,14 @@ display callstacks for alloc, retain and release functions, ordered by date. It 
 
 return callstacks for all retain or release calls, started with last.
 
+**po [memData markHeap]**
+
+save current date which divide allocated object list on earlier and later parts
+
+**po [memData showHeaps]**
+
+show allocated group divided by saved dates
+
+**po [memData objectsForHeap:*n*]**
+
+return allocated object list in selected group
