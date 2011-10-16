@@ -91,6 +91,52 @@ extern NSMutableArray* heaps;
 	return returnString;
 }
 
+- (NSArray*) objectsWithLiveOwner
+{
+    NSMutableArray* result = [NSMutableArray array];
+    
+    for( NSMemCheckObject* obj in self )
+    {
+        BOOL haveLiveOwner = NO;
+        for( NSMemCheckOwnerInfo* owner in obj.owners )
+        {
+            if( !owner.object.isDead )
+            {
+                haveLiveOwner = YES;
+                break;
+            }
+        }
+        
+        if(haveLiveOwner)
+            [result addObject:obj];
+    }
+    
+    return result;
+}
+
+- (NSArray*) objectsWithoutLiveOwner
+{
+    NSMutableArray* result = [NSMutableArray array];
+    
+    for( NSMemCheckObject* obj in self )
+    {
+        BOOL haveLiveOwner = NO;
+        for( NSMemCheckOwnerInfo* owner in obj.owners )
+        {
+            if( !owner.object.isDead )
+            {
+                haveLiveOwner = YES;
+                break;
+            }
+        }
+        
+        if(!haveLiveOwner)
+            [result addObject:obj];
+    }
+    
+    return result;
+}
+
 @end
 
 #endif

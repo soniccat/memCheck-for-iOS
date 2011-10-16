@@ -14,6 +14,8 @@
 @interface NSObject (memCheck) 
 
 + (void) turnMemCheckOn;
++ (void) turnMemCheckOff;
+
 + (id) myAllocFunc;
 - (void) myDeallocFunc;
 

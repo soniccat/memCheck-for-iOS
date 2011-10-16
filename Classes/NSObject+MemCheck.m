@@ -55,8 +55,44 @@ IMP classMyAutoreleaseImp;
 
 typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 
+//alloc
 #define ALLOC_METHOD_EXCHANGE method_exchangeImplementations(classAllocMethod, classMyAllocMethod)
+
+#define ALLOC_METHOD_EXCHANGE_TO_NEW if( method_getImplementation(classAllocMethod) == classAllocImp )\
+ALLOC_METHOD_EXCHANGE
+
+#define ALLOC_METHOD_EXCHANGE_TO_OLD if( method_getImplementation(classAllocMethod) == classMyAllocImp )\
+ALLOC_METHOD_EXCHANGE
+
+//dealloc
+#define DEALLOC_METHOD_EXCHANGE method_exchangeImplementations(classDeallocMethod, classMyDeallocMethod)
+
+#define DEALLOC_METHOD_EXCHANGE_TO_NEW if( method_getImplementation(classDeallocMethod) == classDeallocImp )\
+DEALLOC_METHOD_EXCHANGE
+
+#define DEALLOC_METHOD_EXCHANGE_TO_OLD if( method_getImplementation(classDeallocMethod) == classMyDeallocImp )\
+DEALLOC_METHOD_EXCHANGE
+
+//retain
 #define RETAIN_METHOD_EXCHANGE method_exchangeImplementations(classRetainMethod, classMyRetainMethod)
+
+#define RETAIN_METHOD_EXCHANGE_TO_NEW if( method_getImplementation(classRetainMethod) == classRetainImp )\
+RETAIN_METHOD_EXCHANGE
+
+#define RETAIN_METHOD_EXCHANGE_TO_OLD if( method_getImplementation(classRetainMethod) == classMyRetainImp )\
+RETAIN_METHOD_EXCHANGE
+
+//release
+
+#define RELEASE_METHOD_EXCHANGE method_exchangeImplementations(classReleaseMethod, classMyReleaseMethod)
+
+#define RELEASE_METHOD_EXCHANGE_TO_NEW if( method_getImplementation(classReleaseMethod) == classReleaseImp )\
+RELEASE_METHOD_EXCHANGE
+
+#define RELEASE_METHOD_EXCHANGE_TO_OLD if( method_getImplementation(classReleaseMethod) == classMyReleaseImp )\
+RELEASE_METHOD_EXCHANGE
+
+
 
 #ifdef DISABLE_CATCH_AUTORELEASE
 
@@ -68,7 +104,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 
     #define AUTORELEASE_METHOD_EXCHANGE method_exchangeImplementations(classAutoreleaseMethod, classMyAutoreleaseMethod)
 
-    #define AUTORELEASE_METHOD_EXCHANGE_ON_OLD BOOL needAutoreleaseExchange = ( method_getImplementation(classAllocMethod) == classMyAllocImp );\
+    #define AUTORELEASE_METHOD_EXCHANGE_ON_OLD BOOL needAutoreleaseExchange = ( method_getImplementation(classAutoreleaseMethod) == classMyAutoreleaseImp );\
     if( needAutoreleaseExchange )\
     AUTORELEASE_METHOD_EXCHANGE;
 
@@ -100,47 +136,86 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
     //InstallUncaughtExceptionHandler();
     
 	//alloc
-	classAllocMethod = class_getClassMethod([NSObject class], @selector(alloc) );
-	classAllocImp = method_getImplementation(classAllocMethod);
+    if(!classAllocMethod)
+        classAllocMethod = class_getClassMethod([NSObject class], @selector(alloc) );
+    
+    if(!classAllocImp)
+        classAllocImp = method_getImplementation(classAllocMethod);
 	
-	classMyAllocMethod = class_getClassMethod([NSObject class], @selector(myAllocFunc) );
-	classMyAllocImp = method_getImplementation(classMyAllocMethod);
+    if(!classMyAllocMethod)
+        classMyAllocMethod = class_getClassMethod([NSObject class], @selector(myAllocFunc) );
+    
+    if(!classMyAllocImp)
+        classMyAllocImp = method_getImplementation(classMyAllocMethod);
 	
 	//dealloc
-	classDeallocMethod = class_getInstanceMethod([NSObject class], @selector(dealloc) );
-	classDeallocImp = method_getImplementation(classDeallocMethod);
+    if(!classDeallocMethod)
+        classDeallocMethod = class_getInstanceMethod([NSObject class], @selector(dealloc) );
+    
+    if(!classDeallocImp)
+        classDeallocImp = method_getImplementation(classDeallocMethod);
 	
-	classMyDeallocMethod = class_getInstanceMethod([NSObject class], @selector(myDeallocFunc) );
-	classMyDeallocImp = method_getImplementation(classMyDeallocMethod);
+    if(!classMyDeallocMethod)
+        classMyDeallocMethod = class_getInstanceMethod([NSObject class], @selector(myDeallocFunc) );
+    
+    if(!classMyDeallocImp)
+        classMyDeallocImp = method_getImplementation(classMyDeallocMethod);
 	
 	//retain
-	classRetainMethod = class_getInstanceMethod([NSObject class], @selector(retain) );
-	classRetainImp = method_getImplementation(classRetainMethod);
+    if(!classRetainMethod)
+        classRetainMethod = class_getInstanceMethod([NSObject class], @selector(retain) );
+    
+    if(!classRetainImp)
+        classRetainImp = method_getImplementation(classRetainMethod);
 	
-	classMyRetainMethod = class_getInstanceMethod([NSObject class], @selector(myRetainFunc) );
-	classMyRetainImp = method_getImplementation(classMyRetainMethod);
+    if(!classMyRetainMethod)
+        classMyRetainMethod = class_getInstanceMethod([NSObject class], @selector(myRetainFunc) );
+    
+    if(!classMyRetainImp)
+        classMyRetainImp = method_getImplementation(classMyRetainMethod);
 	
 	//release
-	classReleaseMethod = class_getInstanceMethod([NSObject class], @selector(release) );
-	classReleaseImp = method_getImplementation(classReleaseMethod);
+    if(!classReleaseMethod)
+        classReleaseMethod = class_getInstanceMethod([NSObject class], @selector(release) );
 	
-	classMyReleaseMethod = class_getInstanceMethod([NSObject class], @selector(myReleaseFunc) );
-	classMyReleaseImp = method_getImplementation(classMyReleaseMethod);
+    if(!classReleaseImp)
+         classReleaseImp = method_getImplementation(classReleaseMethod);
+	
+    if(!classMyReleaseMethod)
+        classMyReleaseMethod = class_getInstanceMethod([NSObject class], @selector(myReleaseFunc) );
+	
+    if(!classMyReleaseImp)
+        classMyReleaseImp = method_getImplementation(classMyReleaseMethod);
 	
     //autorelease
-    classAutoreleaseMethod = class_getInstanceMethod([NSObject class], @selector(autorelease) );
-    classAutoreleaseImp  = method_getImplementation(classAutoreleaseMethod);;
+    if(!classAutoreleaseMethod)
+        classAutoreleaseMethod = class_getInstanceMethod([NSObject class], @selector(autorelease) );
     
-    classMyAutoreleaseMethod = class_getInstanceMethod([NSObject class], @selector(myAutoreleaseFunc) );
-    classMyAutoreleaseImp = method_getImplementation(classMyAutoreleaseMethod);
+    if(!classAutoreleaseImp)
+        classAutoreleaseImp  = method_getImplementation(classAutoreleaseMethod);;
     
-	ALLOC_METHOD_EXCHANGE;
-	method_exchangeImplementations(classDeallocMethod, classMyDeallocMethod);
-	RETAIN_METHOD_EXCHANGE;
-	method_exchangeImplementations(classReleaseMethod, classMyReleaseMethod);
+    if(!classMyAutoreleaseMethod)
+        classMyAutoreleaseMethod = class_getInstanceMethod([NSObject class], @selector(myAutoreleaseFunc) );
+    
+    if(!classMyAutoreleaseImp)
+        classMyAutoreleaseImp = method_getImplementation(classMyAutoreleaseMethod);
+    
+	ALLOC_METHOD_EXCHANGE_TO_NEW;
+	DEALLOC_METHOD_EXCHANGE_TO_NEW;
+	RETAIN_METHOD_EXCHANGE_TO_NEW;
+	RELEASE_METHOD_EXCHANGE_TO_NEW;
     AUTORELEASE_METHOD_EXCHANGE;
 	
-	[memData markHeap];
+	//[memData markHeap];
+}
+
++ (void)turnMemCheckOff
+{
+    ALLOC_METHOD_EXCHANGE_TO_OLD;
+	DEALLOC_METHOD_EXCHANGE_TO_OLD;
+	RETAIN_METHOD_EXCHANGE_TO_OLD;
+	RELEASE_METHOD_EXCHANGE_TO_OLD;
+    AUTORELEASE_METHOD_EXCHANGE;
 }
 
 + (id) myAllocFunc
@@ -161,8 +236,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 		
 		if( !found )
 		{
-			ALLOC_METHOD_EXCHANGE;
-            AUTORELEASE_METHOD_EXCHANGE_ON_OLD;
+			[NSObject turnMemCheckOff];
 			NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 			
             //printf("insert %p\n", newPt);
@@ -183,8 +257,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 			}
 			
 			[pool release];
-            AUTORELEASE_METHOD_EXCHANGE_ON_NEW;
-			ALLOC_METHOD_EXCHANGE;
+            [NSObject turnMemCheckOn];
 		}
 	}
 	
@@ -263,7 +336,8 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
                 //look in memory
                 //BOOL found = NO;
                 for(NSMemCheckObject* memObj2 in memData)
-                    if( memObj2.pointerValue == returnObj && [memObj2.retainCallStackArray count] >= [memObj2.releaseCallStackArray count])
+                {
+                    if( memObj2.pointerValue == returnObj && !memObj2.isDead && [memObj.pointerValue retainCount] >= 1 )
                     {               
                         [memObj2 addOwner: [NSMemCheckOwnerInfo memCheckOwnerInfoWithPropertyName:key object:memObj]];
                         //[memObj2.owners addObject:[NSString stringWithFormat:@"[%@ %p %@]",memObj.className, self, key]];
@@ -278,6 +352,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
                         
                         break;
                     }
+                }
                 
                 //if(found)
                 //if( [returnObj isKindOfClass:[NSObject class]] )
@@ -295,17 +370,11 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 {	
 	@synchronized( [NSObject class] )
 	{
-        BOOL needAllocExchange = ( method_getImplementation(classAllocMethod) == classMyAllocImp );
-        
-		if( needAllocExchange )
-			ALLOC_METHOD_EXCHANGE;
-        
-        RETAIN_METHOD_EXCHANGE;
-        AUTORELEASE_METHOD_EXCHANGE_ON_OLD;
+        [NSObject turnMemCheckOff];
         
         //printf("myDeallocFunc %p\n", self);
         
-		int i = [memData count]-1;
+		int i = 0;
         //NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
         
         /*
@@ -315,39 +384,15 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
         }
         */
         
-		while( i>=0 )
+        BOOL needLookInSuggestedLeaks = NO;
+                
+        for(NSMemCheckObject* memObj in memData)
 		{	
             //[(NSMemCheckObject*)[memData objectAtIndex:i] removeOwnerByPtr:self];
  
-			if( ((NSMemCheckObject*)[memData objectAtIndex:i]).pointerValue == self )
+			if( memObj.pointerValue == self )
 			{
-                //property check
-                NSMemCheckObject* memObj = (NSMemCheckObject*)[memData objectAtIndex:i];
-                
-                //printf("remove %p\n", memObj.pointerValue);
-                
-                BOOL needLookInSuggestedLeaks = [memObj retainCount] > 1;
-                
-                if(needLookInSuggestedLeaks)
-                {
-                    NSInteger suggestIndex = 0;
-                    for( int s=0; s<[suggestedLeaks count]; ++s )
-                    {
-                        if( ((NSMemCheckObject*)[suggestedLeaks objectAtIndex:s]).pointerValue == self )
-                        {
-                            [suggestedLeaks removeObjectAtIndex:suggestIndex];
-                            break;
-                        }
-                        
-                        ++suggestIndex;
-                    }
-                }
-                
-                /*
-                for( NSMemCheckObject* memObj2 in memData )
-                {
-                    [memObj2 removeOwnerByObjData:memObj];
-                }*/
+                needLookInSuggestedLeaks = [memObj retainCount] > 1;
                 
                 memObj.isDead = YES;
                 [memData removeObjectAtIndex:i];
@@ -355,17 +400,28 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 				break;
 			}
 			
-			--i;
+			++i;
 		}
+        
+        if(needLookInSuggestedLeaks)
+        {
+            NSInteger suggestIndex = 0;
+            for(NSMemCheckObject* s in suggestedLeaks)
+            {
+                if( s.pointerValue == self )
+                {
+                    [suggestedLeaks removeObjectAtIndex:suggestIndex];
+                    break;
+                }
+                
+                ++suggestIndex;
+            }
+        }
         
         
         //[pool release];
         
-        AUTORELEASE_METHOD_EXCHANGE_ON_NEW;
-        RETAIN_METHOD_EXCHANGE;
-        
-        if( needAllocExchange )
-			ALLOC_METHOD_EXCHANGE;
+        [NSObject turnMemCheckOn];
 	}
 	
 	//call base implement
@@ -377,13 +433,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 {
 	@synchronized( [NSObject class] )
 	{
-		BOOL needAllocExchange = ( method_getImplementation(classAllocMethod) == classMyAllocImp );
-
-		if( needAllocExchange )
-			ALLOC_METHOD_EXCHANGE;
-		
-		RETAIN_METHOD_EXCHANGE;
-        AUTORELEASE_METHOD_EXCHANGE_ON_OLD;
+		[NSObject turnMemCheckOff];
 
 		NSMemCheckObject* addObj = [memData memCheckObjectByPointer:self];
 		
@@ -400,8 +450,6 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 			}
 			@catch (NSException * e) 
 			{
-				
-				
 				NSMemCheckRetainReleaseInfo* info = [[NSMemCheckRetainReleaseInfo alloc] init];
 				info.date = [NSDate date];
 				info.callStack = [e callStackSymbols];
@@ -414,11 +462,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 			[pool release];
 		}
 		
-        AUTORELEASE_METHOD_EXCHANGE_ON_NEW;
-		RETAIN_METHOD_EXCHANGE;
-        
-		if( needAllocExchange )
-			ALLOC_METHOD_EXCHANGE;
+        [NSObject turnMemCheckOn];
 		
 	}
 	 
@@ -431,12 +475,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 {	
 	@synchronized( [NSObject class] )
 	{
-		BOOL needAllocExchange = ( method_getImplementation(classAllocMethod) == classMyAllocImp );
-		
-		if( needAllocExchange )
-			ALLOC_METHOD_EXCHANGE;
-        
-        AUTORELEASE_METHOD_EXCHANGE_ON_OLD;
+		[NSObject turnMemCheckOff];
 		
 		NSMemCheckObject* addObj = [memData memCheckObjectByPointer:self];
 		
@@ -493,10 +532,7 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 			[pool release];
 		}
         
-        AUTORELEASE_METHOD_EXCHANGE_ON_NEW;
-		
-		if( needAllocExchange )
-			ALLOC_METHOD_EXCHANGE;
+        [NSObject turnMemCheckOn];
 	}
 	
 	//call base implement
@@ -508,14 +544,14 @@ typedef id (*OverrideMemCheckPrototipe)(id,SEL);
 {
     @synchronized( [NSObject class] )
 	{
-        AUTORELEASE_METHOD_EXCHANGE_ON_OLD;
+        [NSObject turnMemCheckOff];
         
         //new logic
         NSMemCheckObject* addObj = [memData memCheckObjectByPointer:self];
         if(addObj)
             addObj.autoreleaseCallCount ++;
         
-        AUTORELEASE_METHOD_EXCHANGE_ON_NEW;
+        [NSObject turnMemCheckOn];
     }
     
     

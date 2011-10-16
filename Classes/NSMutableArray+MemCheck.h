@@ -19,6 +19,8 @@
 - (NSMemCheckObject*) memCheckObjectByPointer:(id)obj;
 
 - (NSArray*) objectsForHeap:(NSInteger)index;
+- (NSArray*) objectsWithLiveOwner;
+- (NSArray*) objectsWithoutLiveOwner;
 - (void) markHeap;
 - (NSString*) showHeaps;
 

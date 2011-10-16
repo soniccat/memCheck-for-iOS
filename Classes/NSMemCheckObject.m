@@ -127,7 +127,7 @@
     if( self.isDead )
         isDeadString = @"DEAD";
     else
-        isDeadString = @"";
+        isDeadString = [NSString stringWithFormat:@"(%d,%d)",[self.retainCallStackArray count], [self.releaseCallStackArray count]];
     
     /*
     NSString* isDeadString = nil;
