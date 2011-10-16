@@ -16,6 +16,27 @@
 #import <objc/message.h>
 #import <objc/objc.h>
 
+@interface TestClass: NSObject
+{
+    id str;
+}
+
+@property(nonatomic,retain) id str;
+
+@end
+
+@implementation TestClass
+
+@synthesize str;
+
+- (void)dealloc
+{
+    [super dealloc];
+}
+
+@end
+
+
 @implementation inFoundationAppDelegate
 
 @synthesize window;
@@ -56,6 +77,16 @@
 	
 	NSMutableArray* arr4 = [NSMutableArray arrayWithObject:obj];
 	
+    TestClass* testObj = [[TestClass alloc] init];
+    
+    NSObject* strObj = nil;
+    testObj.str = [[[NSObject alloc] init] autorelease];
+    strObj = testObj.str;
+    
+    [testObj release];
+    
+    //[strObj release];
+    
     // Add the view controller's view to the window and display.
     [self.window addSubview:viewController.view];
     [self.window makeKeyAndVisible];

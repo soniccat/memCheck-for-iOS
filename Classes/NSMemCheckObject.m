@@ -23,7 +23,6 @@
 
 - (NSString*)description
 {
-	//return @"abc";
 	return [NSString stringWithFormat:@"%@\n%@\n", [self.date description], [self.callStack description]];
 }
 
@@ -39,25 +38,68 @@
 
 
 
+@implementation NSMemCheckOwnerInfo : NSObject 
+
+@synthesize propertyName;
+@synthesize object;
+
+- (id)initWithPropertyName:(NSString*)aPropertyName object:(NSMemCheckObject*)anObject 
+{
+    self = [super init];
+    if (self) {
+        self.propertyName = aPropertyName;
+        self.object = anObject;
+    }
+    return self;
+}
+
++ (id)memCheckOwnerInfoWithPropertyName:(NSString*)aPropertyName object:(NSMemCheckObject*)anObject  
+{
+    id result = [[[self class] alloc] initWithPropertyName:aPropertyName object:anObject];
+    
+    return [result autorelease];
+}
+
+
+- (NSString*)description
+{    
+    return [NSString stringWithFormat:@"(%@ %@)", self.propertyName, self.object];
+}
+
+
+- (void)dealloc
+{
+    self.propertyName = nil;
+    self.object = nil;
+    
+    [super dealloc];
+}
+
+@end
+
 
 @implementation NSMemCheckObject
 
 @synthesize pointerValue;
 @synthesize className;
+@synthesize owners;
 @synthesize allocDate;
 @synthesize allocCallStack;
 @synthesize retainCallStackArray;
 @synthesize releaseCallStackArray;
+@synthesize autoreleaseCallCount;
+@synthesize isDead;
 
 - (id)initWithPointer:(id)obj
 {
-	if( self = [super init] )
+	if( (self = [super init]) )
 	{
 		self.pointerValue = obj;
 		self.className = [[obj class] description];
 		self.allocDate = [NSDate date];
 		self.retainCallStackArray = [NSMutableArray array];
 		self.releaseCallStackArray = [NSMutableArray array];
+        self.owners = [NSMutableArray array];
 	}
 	
 	return self;
@@ -65,7 +107,37 @@
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@ memCheckObject %p object %p stack %p %@", self.allocDate, self, self.pointerValue, self.allocCallStack, self.className];
+    NSString* ownerClassNameString = nil;
+    if([self.owners count])
+    {
+        if([self.owners count] == 1)
+            ownerClassNameString = [NSString stringWithFormat:@"\n\towner %@\n", [self.owners objectAtIndex:0]];
+        else
+            ownerClassNameString = [NSString stringWithFormat:@"owner %d", [self.owners count]];
+    }else
+        ownerClassNameString = @"";
+    
+    NSString* autoreleasesCountString = nil;
+    if(self.autoreleaseCallCount)
+        autoreleasesCountString = [NSString stringWithFormat:@"autoreleases %d", self.autoreleaseCallCount];
+    else
+        autoreleasesCountString = @"";
+    
+    NSString* isDeadString = nil;
+    if( self.isDead )
+        isDeadString = @"DEAD";
+    else
+        isDeadString = @"";
+    
+    /*
+    NSString* isDeadString = nil;
+    if([self.retainCallStackArray count] < [self.releaseCallStackArray count])
+        isDeadString = @"(DEAD)";
+    else
+        isDeadString = [NSString stringWithFormat:@"(%d,%d)",[self.retainCallStackArray count], [self.releaseCallStackArray count]];
+    */
+    
+    return [NSString stringWithFormat:@"%@ memCheckObject %p object %p stack %p %@ %@ %@ %@", self.allocDate, self, self.pointerValue, self.allocCallStack, isDeadString, self.className, autoreleasesCountString, ownerClassNameString /*, isDeadString*/ ];
 }
 
 - (void)dealloc
@@ -76,6 +148,7 @@
 	self.releaseCallStackArray = nil;
 	self.allocDate = nil;
 	self.allocCallStack = nil;
+    self.owners = nil;
 	
 	[super dealloc];
 }
@@ -146,6 +219,35 @@
 	
 	return outString;
 }
+
+- (void)addOwner:(NSMemCheckOwnerInfo*)ownerInfo
+{
+    for( NSMemCheckOwnerInfo* memInfo in self.owners )
+        if( memInfo.object.pointerValue == ownerInfo.object.pointerValue )
+            return;
+
+    [self.owners addObject:ownerInfo];
+}
+
+/*
+- (void)removeOwnerByObjData:(NSMemCheckObject*)objInfo
+{
+    for( NSMemCheckOwnerInfo* memInfo in self.owners )
+    {
+        if( memInfo.object == objInfo )
+            memInfo.isDead = YES;
+    }
+}
+
+- (void)removeOwnerByPtr:(id)obj
+{
+    for( NSMemCheckOwnerInfo* memInfo in self.owners )
+    {
+        if( memInfo.object.pointerValue == obj )
+            memInfo.isDead = YES;
+    }
+}
+*/
 
 @end
 
