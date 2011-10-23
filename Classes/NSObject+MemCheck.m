@@ -18,8 +18,9 @@
 #import "NSMemCheckObject.h"
 #import "NSMutableArray+MemCheck.h"
 
-NSMutableArray* memData;
-NSMutableArray* suggestedLeaks;
+NSMutableArray* memData;    //list of allocated objects
+NSMutableArray* removedMemData; //list of removed objects from the memData
+NSMutableArray* suggestedLeaks; 
 NSMutableArray* heaps;
 
 Method classAllocMethod;
@@ -132,6 +133,9 @@ RELEASE_METHOD_EXCHANGE
 	
     if( suggestedLeaks == nil )
         suggestedLeaks = [[NSMutableArray allocWithZone:nil] init];
+    
+    if( removedMemData == nil )
+        removedMemData = [[NSMutableArray allocWithZone:nil] init];
     
     //InstallUncaughtExceptionHandler();
     
@@ -395,8 +399,10 @@ RELEASE_METHOD_EXCHANGE
                 needLookInSuggestedLeaks = [memObj retainCount] > 1;
                 
                 memObj.isDead = YES;
-                [memData removeObjectAtIndex:i];
+                memObj.deadDate = [NSDate date];
                 
+                [removedMemData addObject:memObj];
+                [memData removeObjectAtIndex:i];
 				break;
 			}
 			

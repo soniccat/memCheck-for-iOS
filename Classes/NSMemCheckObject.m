@@ -89,6 +89,7 @@
 @synthesize releaseCallStackArray;
 @synthesize autoreleaseCallCount;
 @synthesize isDead;
+@synthesize deadDate;
 
 - (id)initWithPointer:(id)obj
 {

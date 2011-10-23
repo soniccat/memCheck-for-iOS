@@ -15,7 +15,7 @@
 
 //for memData
 - (NSString*) allMem;
-- (NSString*) top:(NSInteger)top;
+- (NSArray*) top:(NSInteger)top;
 - (NSMemCheckObject*) memCheckObjectByPointer:(id)obj;
 
 - (NSArray*) objectsForHeap:(NSInteger)index;
@@ -23,6 +23,8 @@
 - (NSArray*) objectsWithoutLiveOwner;
 - (void) markHeap;
 - (NSString*) showHeaps;
+
+- (void) saveGraph; 
 
 @end
 

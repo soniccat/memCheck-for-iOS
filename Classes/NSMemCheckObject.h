@@ -54,6 +54,7 @@
     
     NSInteger autoreleaseCallCount;
     BOOL isDead;
+    NSDate* deadDate;
 }
 
 @property(nonatomic,assign) id pointerValue;
@@ -64,7 +65,8 @@
 @property(nonatomic,retain) NSMutableArray* retainCallStackArray;
 @property(nonatomic,retain) NSMutableArray* releaseCallStackArray;
 @property(nonatomic,assign) NSInteger autoreleaseCallCount;
-@property (nonatomic, assign) BOOL isDead;
+@property(nonatomic,retain) NSDate* deadDate;
+@property(nonatomic, assign) BOOL isDead;
 
 - (id)initWithPointer:(id)obj;
 - (NSString*) retains;
