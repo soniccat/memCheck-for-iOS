@@ -21,6 +21,8 @@
 - (NSArray*) objectsForHeap:(NSInteger)index;
 - (NSArray*) objectsWithLiveOwner;
 - (NSArray*) objectsWithoutLiveOwner;
+- (NSArray*) objectsWithOwnersLessThan:(NSInteger)value;
+- (NSArray*) objectsWithOwners;
 - (void) markHeap;
 - (NSString*) showHeaps;
 

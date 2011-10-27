@@ -139,6 +139,30 @@ extern NSMutableArray* removedMemData;
     return result;
 }
 
+- (NSArray*) objectsWithOwnersLessThan:(NSInteger)value
+{
+    NSMutableArray* resultArray = [NSMutableArray array];
+    for( NSMemCheckObject* obj in self )
+    {
+        if( [obj.owners count] <= value )
+            [resultArray addObject:obj];
+    }
+    
+    return resultArray;
+}
+
+- (NSArray*) objectsWithOwners
+{
+    NSMutableArray* resultArray = [NSMutableArray array];
+    for( NSMemCheckObject* obj in self )
+    {
+        if( [obj.owners count] )
+            [resultArray addObject:obj];
+    }
+    
+    return resultArray;
+}
+
 - (void)appendToArray:(NSMutableArray*)array datesFromObject:(NSMemCheckObject*)memObj
 {
     if( ![array containsObject:memObj.allocDate] )
