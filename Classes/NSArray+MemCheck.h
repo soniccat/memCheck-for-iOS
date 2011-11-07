@@ -1,20 +1,29 @@
 //
 //  NSArray+MemCheck.h
-//  memCheck
+//  News360Core
 //
-//  Created by Alexey Glushkov on 23.02.11.
-//  Copyright 2011 Mobile Platforms. All rights reserved.
+//  Created by ALEXEY GLUSHKOV on 06.11.11.
+//  Copyright (c) 2011 News360. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-#ifdef MEMTEST_ON
-
-@interface NSArray(MemCheck) 
+@interface NSArray(MemCheck)
 {
-
+    
 }
 
-@end
+- (NSArray*) objectsWithOwnersLessThan:(NSInteger)value;
+- (NSString*) stringWithMemCheckObjects;
+- (NSArray*) objectsForHeap:(NSInteger)index;
 
-#endif
+- (NSArray*) objectsWithLiveOwner;
+- (NSArray*) objectsWithoutLiveOwner;
+- (NSArray*) objectsWithOwners;
+- (NSArray*) objectsWithoutOwners;
+- (NSArray*) objectsWithoutClass:(NSString*)className;
+
+- (void) saveGraphWithPath:(NSString*)path;
+- (NSString*) showHeaps;
+
+@end

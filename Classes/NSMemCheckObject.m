@@ -14,7 +14,7 @@
 #import <objc/objc.h>
 
 #import "NSMemCheckObject.h"
-
+#import "NSObject+MemCheck.h"
 
 @implementation NSMemCheckRetainReleaseInfo
 
@@ -108,37 +108,55 @@
 
 - (NSString*)description
 {
-    NSString* ownerClassNameString = nil;
-    if([self.owners count])
-    {
-        if([self.owners count] == 1)
-            ownerClassNameString = [NSString stringWithFormat:@"\n\towner %@\n", [self.owners objectAtIndex:0]];
-        else
-            ownerClassNameString = [NSString stringWithFormat:@"owner %d", [self.owners count]];
-    }else
-        ownerClassNameString = @"";
+    NSString* returnString = nil;
     
-    NSString* autoreleasesCountString = nil;
-    if(self.autoreleaseCallCount)
-        autoreleasesCountString = [NSString stringWithFormat:@"autoreleases %d", self.autoreleaseCallCount];
-    else
-        autoreleasesCountString = @"";
+    @synchronized( [NSObject class] )
+	{
+        [NSObject turnMemCheckOff];
+        
+        @try
+        {
+            NSString* ownerClassNameString = nil;
+            if([self.owners count])
+            {
+                if([self.owners count] == 1)
+                    ownerClassNameString = [NSString stringWithFormat:@"\n\towner %@\n", [self.owners objectAtIndex:0]];
+                else
+                    ownerClassNameString = [NSString stringWithFormat:@"owner %d", [self.owners count]];
+            }else
+                ownerClassNameString = @"";
+            
+            NSString* autoreleasesCountString = nil;
+            if(self.autoreleaseCallCount)
+                autoreleasesCountString = [NSString stringWithFormat:@"autoreleases %d", self.autoreleaseCallCount];
+            else
+                autoreleasesCountString = @"";
+            
+            NSString* isDeadString = nil;
+            if( self.isDead )
+                isDeadString = @"DEAD";
+            else
+                isDeadString = [NSString stringWithFormat:@"(%d,%d)",[self.retainCallStackArray count], [self.releaseCallStackArray count]];
+            
+            /*
+            NSString* isDeadString = nil;
+            if([self.retainCallStackArray count] < [self.releaseCallStackArray count])
+                isDeadString = @"(DEAD)";
+            else
+                isDeadString = [NSString stringWithFormat:@"(%d,%d)",[self.retainCallStackArray count], [self.releaseCallStackArray count]];
+            */
+            
+            returnString = [NSString stringWithFormat:@"%@ memCheckObject %p object %p stack %p %@ %@ %@ %@", self.allocDate, self, self.pointerValue, self.allocCallStack, isDeadString, self.className, autoreleasesCountString, ownerClassNameString /*, isDeadString*/ ];
+            
+            [NSObject turnMemCheckOn];
+        }
+        @catch (NSException* e) 
+        {
+            NSLog(@"Exception: %@", [e description]);
+        }
+    }
     
-    NSString* isDeadString = nil;
-    if( self.isDead )
-        isDeadString = @"DEAD";
-    else
-        isDeadString = [NSString stringWithFormat:@"(%d,%d)",[self.retainCallStackArray count], [self.releaseCallStackArray count]];
-    
-    /*
-    NSString* isDeadString = nil;
-    if([self.retainCallStackArray count] < [self.releaseCallStackArray count])
-        isDeadString = @"(DEAD)";
-    else
-        isDeadString = [NSString stringWithFormat:@"(%d,%d)",[self.retainCallStackArray count], [self.releaseCallStackArray count]];
-    */
-    
-    return [NSString stringWithFormat:@"%@ memCheckObject %p object %p stack %p %@ %@ %@ %@", self.allocDate, self, self.pointerValue, self.allocCallStack, isDeadString, self.className, autoreleasesCountString, ownerClassNameString /*, isDeadString*/ ];
+    return returnString;
 }
 
 - (void)dealloc

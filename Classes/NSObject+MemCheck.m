@@ -17,11 +17,15 @@
 #import <objc/objc.h>
 #import "NSMemCheckObject.h"
 #import "NSMutableArray+MemCheck.h"
+#import "NSMemCheckParser.h"
+#import "NSMemCheckHeap.h"
 
 NSMutableArray* memData;    //list of allocated objects
 NSMutableArray* removedMemData; //list of removed objects from the memData
 NSMutableArray* suggestedLeaks; 
-NSMutableArray* heaps;
+
+extern NSMutableArray* heaps;
+extern NSMemCheckParser* parser;
 
 Method classAllocMethod;
 IMP classAllocImp;
@@ -129,13 +133,19 @@ RELEASE_METHOD_EXCHANGE
 		memData = [[NSMutableArray allocWithZone:nil] init];
 	
 	if( heaps == nil )
+    {
 		heaps = [[NSMutableArray allocWithZone:nil] init];
+        [NSMemCheckHeap markHeapWithName:@"startHeap"];
+    }
 	
     if( suggestedLeaks == nil )
         suggestedLeaks = [[NSMutableArray allocWithZone:nil] init];
     
     if( removedMemData == nil )
         removedMemData = [[NSMutableArray allocWithZone:nil] init];
+    
+    if( parser == nil )
+        parser = [[NSMemCheckParser alloc] init];
     
     //InstallUncaughtExceptionHandler();
     

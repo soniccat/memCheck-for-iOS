@@ -15,10 +15,29 @@
 		2899E5220DE3E06400AC0155 /* memCheckViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* memCheckViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* memCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* memCheckViewController.m */; };
-		D6520D111454A8DA0021B2D7 /* NSMemCheckDotSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D6520D101454A8DA0021B2D7 /* NSMemCheckDotSupport.m */; };
-		D66E457E130EDACC00E2C163 /* NSMemCheckObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D66E457D130EDACC00E2C163 /* NSMemCheckObject.m */; };
-		D66E4645130EE99700E2C163 /* NSObject+MemCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D66E4644130EE99700E2C163 /* NSObject+MemCheck.m */; };
-		D6E5A3C713115EF20048C7D4 /* NSMutableArray+MemCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D6E5A3C613115EF20048C7D4 /* NSMutableArray+MemCheck.m */; };
+		D633E60B14684DDC00117B27 /* NSMemFilterHeap.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5DC14684DDC00117B27 /* NSMemFilterHeap.m */; };
+		D633E60C14684DDC00117B27 /* NSMemFilterWithLiveOwners.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5DE14684DDC00117B27 /* NSMemFilterWithLiveOwners.m */; };
+		D633E60D14684DDC00117B27 /* NSMemFilterWithout.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5E014684DDC00117B27 /* NSMemFilterWithout.m */; };
+		D633E60E14684DDC00117B27 /* NSMemFilterWithoutLiveOwners.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5E214684DDC00117B27 /* NSMemFilterWithoutLiveOwners.m */; };
+		D633E60F14684DDC00117B27 /* NSMemFilterWithoutOwners.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5E414684DDC00117B27 /* NSMemFilterWithoutOwners.m */; };
+		D633E61014684DDC00117B27 /* NSMemFilterWithOwners.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5E614684DDC00117B27 /* NSMemFilterWithOwners.m */; };
+		D633E61114684DDC00117B27 /* NSMemFilterWithOwnersLessThan.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5E814684DDC00117B27 /* NSMemFilterWithOwnersLessThan.m */; };
+		D633E61414684DDC00117B27 /* NSMemCommandMarkHeap.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5EF14684DDC00117B27 /* NSMemCommandMarkHeap.m */; };
+		D633E61514684DDC00117B27 /* NSMemCommandMarkHeapWithName.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5F114684DDC00117B27 /* NSMemCommandMarkHeapWithName.m */; };
+		D633E61614684DDC00117B27 /* NSMemCommandPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5F314684DDC00117B27 /* NSMemCommandPrint.m */; };
+		D633E61714684DDC00117B27 /* NSMemCommandSaveGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5F514684DDC00117B27 /* NSMemCommandSaveGraph.m */; };
+		D633E61814684DDC00117B27 /* NSMemCommandShowHeaps.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5F714684DDC00117B27 /* NSMemCommandShowHeaps.m */; };
+		D633E61A14684DDC00117B27 /* NSMemArgAll.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5FC14684DDC00117B27 /* NSMemArgAll.m */; };
+		D633E61B14684DDC00117B27 /* NSMemArgDead.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E5FE14684DDC00117B27 /* NSMemArgDead.m */; };
+		D633E61C14684DDC00117B27 /* NSMemArgHeap.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E60014684DDC00117B27 /* NSMemArgHeap.m */; };
+		D633E61D14684DDC00117B27 /* NSMemArgLeaks.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E60214684DDC00117B27 /* NSMemArgLeaks.m */; };
+		D633E62F14684EED00117B27 /* NSMemCheckParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E62114684EED00117B27 /* NSMemCheckParser.m */; };
+		D633E63014684EED00117B27 /* NSArray+MemCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E62214684EED00117B27 /* NSArray+MemCheck.m */; };
+		D633E63114684EED00117B27 /* NSObject+MemCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E62414684EED00117B27 /* NSObject+MemCheck.m */; };
+		D633E63214684EED00117B27 /* NSMutableArray+MemCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E62614684EED00117B27 /* NSMutableArray+MemCheck.m */; };
+		D633E63314684EED00117B27 /* NSMemCheckHeap.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E62714684EED00117B27 /* NSMemCheckHeap.m */; };
+		D633E63414684EED00117B27 /* NSMemCheckObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E62A14684EED00117B27 /* NSMemCheckObject.m */; };
+		D633E63514684EED00117B27 /* NSMemCheckDotSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D633E62B14684EED00117B27 /* NSMemCheckDotSupport.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,14 +54,52 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* memCheck_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memCheck_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* memCheck-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "memCheck-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		D6520D0F1454A8DA0021B2D7 /* NSMemCheckDotSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemCheckDotSupport.h; sourceTree = "<group>"; };
-		D6520D101454A8DA0021B2D7 /* NSMemCheckDotSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemCheckDotSupport.m; sourceTree = "<group>"; };
-		D66E457C130EDACC00E2C163 /* NSMemCheckObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemCheckObject.h; sourceTree = "<group>"; };
-		D66E457D130EDACC00E2C163 /* NSMemCheckObject.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = NSMemCheckObject.m; sourceTree = "<group>"; };
-		D66E4643130EE99700E2C163 /* NSObject+MemCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MemCheck.h"; sourceTree = "<group>"; };
-		D66E4644130EE99700E2C163 /* NSObject+MemCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MemCheck.m"; sourceTree = "<group>"; };
-		D6E5A3C513115EF20048C7D4 /* NSMutableArray+MemCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MemCheck.h"; sourceTree = "<group>"; };
-		D6E5A3C613115EF20048C7D4 /* NSMutableArray+MemCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MemCheck.m"; sourceTree = "<group>"; };
+		D633E5DB14684DDC00117B27 /* NSMemFilterHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemFilterHeap.h; sourceTree = "<group>"; };
+		D633E5DC14684DDC00117B27 /* NSMemFilterHeap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemFilterHeap.m; sourceTree = "<group>"; };
+		D633E5DD14684DDC00117B27 /* NSMemFilterWithLiveOwners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemFilterWithLiveOwners.h; sourceTree = "<group>"; };
+		D633E5DE14684DDC00117B27 /* NSMemFilterWithLiveOwners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemFilterWithLiveOwners.m; sourceTree = "<group>"; };
+		D633E5DF14684DDC00117B27 /* NSMemFilterWithout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemFilterWithout.h; sourceTree = "<group>"; };
+		D633E5E014684DDC00117B27 /* NSMemFilterWithout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemFilterWithout.m; sourceTree = "<group>"; };
+		D633E5E114684DDC00117B27 /* NSMemFilterWithoutLiveOwners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemFilterWithoutLiveOwners.h; sourceTree = "<group>"; };
+		D633E5E214684DDC00117B27 /* NSMemFilterWithoutLiveOwners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemFilterWithoutLiveOwners.m; sourceTree = "<group>"; };
+		D633E5E314684DDC00117B27 /* NSMemFilterWithoutOwners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemFilterWithoutOwners.h; sourceTree = "<group>"; };
+		D633E5E414684DDC00117B27 /* NSMemFilterWithoutOwners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemFilterWithoutOwners.m; sourceTree = "<group>"; };
+		D633E5E514684DDC00117B27 /* NSMemFilterWithOwners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemFilterWithOwners.h; sourceTree = "<group>"; };
+		D633E5E614684DDC00117B27 /* NSMemFilterWithOwners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemFilterWithOwners.m; sourceTree = "<group>"; };
+		D633E5E714684DDC00117B27 /* NSMemFilterWithOwnersLessThan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemFilterWithOwnersLessThan.h; sourceTree = "<group>"; };
+		D633E5E814684DDC00117B27 /* NSMemFilterWithOwnersLessThan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemFilterWithOwnersLessThan.m; sourceTree = "<group>"; };
+		D633E5EE14684DDC00117B27 /* NSMemCommandMarkHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemCommandMarkHeap.h; sourceTree = "<group>"; };
+		D633E5EF14684DDC00117B27 /* NSMemCommandMarkHeap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemCommandMarkHeap.m; sourceTree = "<group>"; };
+		D633E5F014684DDC00117B27 /* NSMemCommandMarkHeapWithName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemCommandMarkHeapWithName.h; sourceTree = "<group>"; };
+		D633E5F114684DDC00117B27 /* NSMemCommandMarkHeapWithName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemCommandMarkHeapWithName.m; sourceTree = "<group>"; };
+		D633E5F214684DDC00117B27 /* NSMemCommandPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemCommandPrint.h; sourceTree = "<group>"; };
+		D633E5F314684DDC00117B27 /* NSMemCommandPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemCommandPrint.m; sourceTree = "<group>"; };
+		D633E5F414684DDC00117B27 /* NSMemCommandSaveGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemCommandSaveGraph.h; sourceTree = "<group>"; };
+		D633E5F514684DDC00117B27 /* NSMemCommandSaveGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemCommandSaveGraph.m; sourceTree = "<group>"; };
+		D633E5F614684DDC00117B27 /* NSMemCommandShowHeaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemCommandShowHeaps.h; sourceTree = "<group>"; };
+		D633E5F714684DDC00117B27 /* NSMemCommandShowHeaps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemCommandShowHeaps.m; sourceTree = "<group>"; };
+		D633E5FB14684DDC00117B27 /* NSMemArgAll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemArgAll.h; sourceTree = "<group>"; };
+		D633E5FC14684DDC00117B27 /* NSMemArgAll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemArgAll.m; sourceTree = "<group>"; };
+		D633E5FD14684DDC00117B27 /* NSMemArgDead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemArgDead.h; sourceTree = "<group>"; };
+		D633E5FE14684DDC00117B27 /* NSMemArgDead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemArgDead.m; sourceTree = "<group>"; };
+		D633E5FF14684DDC00117B27 /* NSMemArgHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemArgHeap.h; sourceTree = "<group>"; };
+		D633E60014684DDC00117B27 /* NSMemArgHeap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemArgHeap.m; sourceTree = "<group>"; };
+		D633E60114684DDC00117B27 /* NSMemArgLeaks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSMemArgLeaks.h; sourceTree = "<group>"; };
+		D633E60214684DDC00117B27 /* NSMemArgLeaks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSMemArgLeaks.m; sourceTree = "<group>"; };
+		D633E62114684EED00117B27 /* NSMemCheckParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSMemCheckParser.m; path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMemCheckParser.m; sourceTree = "<group>"; };
+		D633E62214684EED00117B27 /* NSArray+MemCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MemCheck.m"; path = "../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSArray+MemCheck.m"; sourceTree = "<group>"; };
+		D633E62314684EED00117B27 /* NSArray+MemCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+MemCheck.h"; path = "../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSArray+MemCheck.h"; sourceTree = "<group>"; };
+		D633E62414684EED00117B27 /* NSObject+MemCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+MemCheck.m"; path = "../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSObject+MemCheck.m"; sourceTree = "<group>"; };
+		D633E62514684EED00117B27 /* NSMemCheckHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSMemCheckHeap.h; path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMemCheckHeap.h; sourceTree = "<group>"; };
+		D633E62614684EED00117B27 /* NSMutableArray+MemCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+MemCheck.m"; path = "../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMutableArray+MemCheck.m"; sourceTree = "<group>"; };
+		D633E62714684EED00117B27 /* NSMemCheckHeap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSMemCheckHeap.m; path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMemCheckHeap.m; sourceTree = "<group>"; };
+		D633E62814684EED00117B27 /* NSMutableArray+MemCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+MemCheck.h"; path = "../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMutableArray+MemCheck.h"; sourceTree = "<group>"; };
+		D633E62914684EED00117B27 /* NSMemCheckParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSMemCheckParser.h; path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMemCheckParser.h; sourceTree = "<group>"; };
+		D633E62A14684EED00117B27 /* NSMemCheckObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSMemCheckObject.m; path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMemCheckObject.m; sourceTree = "<group>"; };
+		D633E62B14684EED00117B27 /* NSMemCheckDotSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSMemCheckDotSupport.m; path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMemCheckDotSupport.m; sourceTree = "<group>"; };
+		D633E62C14684EED00117B27 /* NSMemCheckDotSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSMemCheckDotSupport.h; path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMemCheckDotSupport.h; sourceTree = "<group>"; };
+		D633E62D14684EED00117B27 /* NSMemCheckObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSMemCheckObject.h; path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSMemCheckObject.h; sourceTree = "<group>"; };
+		D633E62E14684EED00117B27 /* NSObject+MemCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+MemCheck.h"; path = "../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/NSObject+MemCheck.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,18 +119,24 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D6520D0F1454A8DA0021B2D7 /* NSMemCheckDotSupport.h */,
-				D6520D101454A8DA0021B2D7 /* NSMemCheckDotSupport.m */,
-				D66E4643130EE99700E2C163 /* NSObject+MemCheck.h */,
-				D66E4644130EE99700E2C163 /* NSObject+MemCheck.m */,
-				D66E457C130EDACC00E2C163 /* NSMemCheckObject.h */,
-				D66E457D130EDACC00E2C163 /* NSMemCheckObject.m */,
-				D6E5A3C513115EF20048C7D4 /* NSMutableArray+MemCheck.h */,
-				D6E5A3C613115EF20048C7D4 /* NSMutableArray+MemCheck.m */,
-				1D3623240D0F684500981E51 /* memCheckAppDelegate.h */,
-				1D3623250D0F684500981E51 /* memCheckAppDelegate.m */,
-				28D7ACF60DDB3853001CB0EB /* memCheckViewController.h */,
-				28D7ACF70DDB3853001CB0EB /* memCheckViewController.m */,
+				D633E62014684E6E00117B27 /* UI */,
+				D633E5DA14684DDC00117B27 /* Filters */,
+				D633E5ED14684DDC00117B27 /* Commands */,
+				D633E5FA14684DDC00117B27 /* Arguments */,
+				D633E62914684EED00117B27 /* NSMemCheckParser.h */,
+				D633E62114684EED00117B27 /* NSMemCheckParser.m */,
+				D633E62314684EED00117B27 /* NSArray+MemCheck.h */,
+				D633E62214684EED00117B27 /* NSArray+MemCheck.m */,
+				D633E62E14684EED00117B27 /* NSObject+MemCheck.h */,
+				D633E62414684EED00117B27 /* NSObject+MemCheck.m */,
+				D633E62514684EED00117B27 /* NSMemCheckHeap.h */,
+				D633E62714684EED00117B27 /* NSMemCheckHeap.m */,
+				D633E62814684EED00117B27 /* NSMutableArray+MemCheck.h */,
+				D633E62614684EED00117B27 /* NSMutableArray+MemCheck.m */,
+				D633E62D14684EED00117B27 /* NSMemCheckObject.h */,
+				D633E62A14684EED00117B27 /* NSMemCheckObject.m */,
+				D633E62C14684EED00117B27 /* NSMemCheckDotSupport.h */,
+				D633E62B14684EED00117B27 /* NSMemCheckDotSupport.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -125,6 +188,73 @@
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D633E5DA14684DDC00117B27 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				D633E5DB14684DDC00117B27 /* NSMemFilterHeap.h */,
+				D633E5DC14684DDC00117B27 /* NSMemFilterHeap.m */,
+				D633E5DD14684DDC00117B27 /* NSMemFilterWithLiveOwners.h */,
+				D633E5DE14684DDC00117B27 /* NSMemFilterWithLiveOwners.m */,
+				D633E5DF14684DDC00117B27 /* NSMemFilterWithout.h */,
+				D633E5E014684DDC00117B27 /* NSMemFilterWithout.m */,
+				D633E5E114684DDC00117B27 /* NSMemFilterWithoutLiveOwners.h */,
+				D633E5E214684DDC00117B27 /* NSMemFilterWithoutLiveOwners.m */,
+				D633E5E314684DDC00117B27 /* NSMemFilterWithoutOwners.h */,
+				D633E5E414684DDC00117B27 /* NSMemFilterWithoutOwners.m */,
+				D633E5E514684DDC00117B27 /* NSMemFilterWithOwners.h */,
+				D633E5E614684DDC00117B27 /* NSMemFilterWithOwners.m */,
+				D633E5E714684DDC00117B27 /* NSMemFilterWithOwnersLessThan.h */,
+				D633E5E814684DDC00117B27 /* NSMemFilterWithOwnersLessThan.m */,
+			);
+			name = Filters;
+			path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/Filters;
+			sourceTree = "<group>";
+		};
+		D633E5ED14684DDC00117B27 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				D633E5EE14684DDC00117B27 /* NSMemCommandMarkHeap.h */,
+				D633E5EF14684DDC00117B27 /* NSMemCommandMarkHeap.m */,
+				D633E5F014684DDC00117B27 /* NSMemCommandMarkHeapWithName.h */,
+				D633E5F114684DDC00117B27 /* NSMemCommandMarkHeapWithName.m */,
+				D633E5F214684DDC00117B27 /* NSMemCommandPrint.h */,
+				D633E5F314684DDC00117B27 /* NSMemCommandPrint.m */,
+				D633E5F414684DDC00117B27 /* NSMemCommandSaveGraph.h */,
+				D633E5F514684DDC00117B27 /* NSMemCommandSaveGraph.m */,
+				D633E5F614684DDC00117B27 /* NSMemCommandShowHeaps.h */,
+				D633E5F714684DDC00117B27 /* NSMemCommandShowHeaps.m */,
+			);
+			name = Commands;
+			path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/Commands;
+			sourceTree = "<group>";
+		};
+		D633E5FA14684DDC00117B27 /* Arguments */ = {
+			isa = PBXGroup;
+			children = (
+				D633E5FB14684DDC00117B27 /* NSMemArgAll.h */,
+				D633E5FC14684DDC00117B27 /* NSMemArgAll.m */,
+				D633E5FD14684DDC00117B27 /* NSMemArgDead.h */,
+				D633E5FE14684DDC00117B27 /* NSMemArgDead.m */,
+				D633E5FF14684DDC00117B27 /* NSMemArgHeap.h */,
+				D633E60014684DDC00117B27 /* NSMemArgHeap.m */,
+				D633E60114684DDC00117B27 /* NSMemArgLeaks.h */,
+				D633E60214684DDC00117B27 /* NSMemArgLeaks.m */,
+			);
+			name = Arguments;
+			path = ../../news360iOS/News360iPhone.v2/trunk/News360iPhone/Libs/News360Core/News360Core/memoryCounter/Arguments;
+			sourceTree = "<group>";
+		};
+		D633E62014684E6E00117B27 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1D3623240D0F684500981E51 /* memCheckAppDelegate.h */,
+				1D3623250D0F684500981E51 /* memCheckAppDelegate.m */,
+				28D7ACF60DDB3853001CB0EB /* memCheckViewController.h */,
+				28D7ACF70DDB3853001CB0EB /* memCheckViewController.m */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,10 +321,29 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* memCheckAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* memCheckViewController.m in Sources */,
-				D66E4645130EE99700E2C163 /* NSObject+MemCheck.m in Sources */,
-				D66E457E130EDACC00E2C163 /* NSMemCheckObject.m in Sources */,
-				D6E5A3C713115EF20048C7D4 /* NSMutableArray+MemCheck.m in Sources */,
-				D6520D111454A8DA0021B2D7 /* NSMemCheckDotSupport.m in Sources */,
+				D633E60B14684DDC00117B27 /* NSMemFilterHeap.m in Sources */,
+				D633E60C14684DDC00117B27 /* NSMemFilterWithLiveOwners.m in Sources */,
+				D633E60D14684DDC00117B27 /* NSMemFilterWithout.m in Sources */,
+				D633E60E14684DDC00117B27 /* NSMemFilterWithoutLiveOwners.m in Sources */,
+				D633E60F14684DDC00117B27 /* NSMemFilterWithoutOwners.m in Sources */,
+				D633E61014684DDC00117B27 /* NSMemFilterWithOwners.m in Sources */,
+				D633E61114684DDC00117B27 /* NSMemFilterWithOwnersLessThan.m in Sources */,
+				D633E61414684DDC00117B27 /* NSMemCommandMarkHeap.m in Sources */,
+				D633E61514684DDC00117B27 /* NSMemCommandMarkHeapWithName.m in Sources */,
+				D633E61614684DDC00117B27 /* NSMemCommandPrint.m in Sources */,
+				D633E61714684DDC00117B27 /* NSMemCommandSaveGraph.m in Sources */,
+				D633E61814684DDC00117B27 /* NSMemCommandShowHeaps.m in Sources */,
+				D633E61A14684DDC00117B27 /* NSMemArgAll.m in Sources */,
+				D633E61B14684DDC00117B27 /* NSMemArgDead.m in Sources */,
+				D633E61C14684DDC00117B27 /* NSMemArgHeap.m in Sources */,
+				D633E61D14684DDC00117B27 /* NSMemArgLeaks.m in Sources */,
+				D633E62F14684EED00117B27 /* NSMemCheckParser.m in Sources */,
+				D633E63014684EED00117B27 /* NSArray+MemCheck.m in Sources */,
+				D633E63114684EED00117B27 /* NSObject+MemCheck.m in Sources */,
+				D633E63214684EED00117B27 /* NSMutableArray+MemCheck.m in Sources */,
+				D633E63314684EED00117B27 /* NSMemCheckHeap.m in Sources */,
+				D633E63414684EED00117B27 /* NSMemCheckObject.m in Sources */,
+				D633E63514684EED00117B27 /* NSMemCheckDotSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

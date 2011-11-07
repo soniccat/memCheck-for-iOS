@@ -39,7 +39,6 @@
 
 @end
 
-
 @interface NSMemCheckObject : NSObject 
 {
 @public

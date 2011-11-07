@@ -18,15 +18,12 @@
 - (NSArray*) top:(NSInteger)top;
 - (NSMemCheckObject*) memCheckObjectByPointer:(id)obj;
 
-- (NSArray*) objectsForHeap:(NSInteger)index;
-- (NSArray*) objectsWithLiveOwner;
-- (NSArray*) objectsWithoutLiveOwner;
-- (NSArray*) objectsWithOwnersLessThan:(NSInteger)value;
-- (NSArray*) objectsWithOwners;
 - (void) markHeap;
 - (NSString*) showHeaps;
+- (void) markHeapWithName:(NSString*)name;
 
-- (void) saveGraph; 
+- (void) saveGraphInFolder:(NSString*)folderPath withName:(NSString*)name; 
+- (void) saveGraphInHomeWithName:(NSString*)name;
 
 @end
 
