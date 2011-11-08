@@ -86,13 +86,61 @@ NSMemCheckParser* parser;
     [parser performSelector:@selector(parse:) withObject:command afterDelay:1];
 }
 
+- (NSMutableArray*)wordsFromCommand:(NSString*)command
+{
+    NSMutableArray* strings = [NSMutableArray array];
+    
+    //divide string on words where word is set of characters without spaces or string with \" at start and end
+    //Expamle: abc def "rty ugf"
+    NSInteger stringPos = 0;
+    while( stringPos < [command length] )
+    {
+        if( [command characterAtIndex:stringPos] == ' ' )
+            stringPos++;
+        
+        else if( [command characterAtIndex:stringPos] == '"')
+        {
+            NSInteger endPos = [command rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"\""] options:0 range:NSMakeRange(stringPos+1, [command length]-stringPos-1)].location;
+            
+            if(endPos == NSNotFound)
+            {
+                NSLog(@"Error: end of string isn't found %@", command);
+                return nil;
+            }else
+                endPos +=  1;
+            
+            NSString* word = [command substringWithRange:NSMakeRange(stringPos+1, endPos - stringPos-2)];
+            [strings addObject: word ];
+            
+            stringPos = endPos;
+            
+            //read word
+        }else
+        {
+            NSInteger endPos = [command rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@" "] options:0 range:NSMakeRange(stringPos+1, [command length]-stringPos-1)].location;
+            
+            if(endPos == NSNotFound)
+                endPos = [command length];
+            
+            NSString* word = [command substringWithRange:NSMakeRange(stringPos, endPos - stringPos)];
+            [strings addObject: word ];
+            
+            stringPos = endPos;
+        }
+    }
+    
+    return strings;
+}
+
 - (void)parse:(NSString*)command
 {
     @try
     {
     
-    NSArray* strings = [command componentsSeparatedByString:@" "];
-    
+    NSMutableArray* strings = [self wordsFromCommand:command];
+    if(!strings)
+        return;
+        
     NSInteger startIndex = 0;
     NSArray* memObjects = nil;
     
@@ -104,17 +152,10 @@ NSMemCheckParser* parser;
             startIndex = [argument parse:strings];
             memObjects = argument.memCheckObjects;
             
-            strings = [strings subarrayWithRange:NSMakeRange(startIndex, [strings count] - startIndex )];
+            [strings removeObjectsInRange:NSMakeRange(0, startIndex)];
+            break;
         }
     }
-    
-    /*
-    if(!memObjects)
-    {
-        NSLog(@"Can't parse argument in %@", command);
-        return;
-    }
-    */
     
     //use filters
     BOOL canParse = YES;
@@ -131,7 +172,7 @@ NSMemCheckParser* parser;
                 startIndex = [filter parse:strings];
                 memObjects = filter.outputMemCheckObjects;
                 
-                strings = [strings subarrayWithRange:NSMakeRange(startIndex, [strings count] - startIndex )];
+                [strings removeObjectsInRange:NSMakeRange(0, startIndex)];
                 canParse = YES;
             }
         }
@@ -150,7 +191,7 @@ NSMemCheckParser* parser;
                 startIndex = [command parse:strings];
                 [command run];
                 
-                strings = [strings subarrayWithRange:NSMakeRange(startIndex, [strings count] - startIndex )];
+                [strings removeObjectsInRange:NSMakeRange(0, startIndex)];
                 canParse = YES;
             }
         }
