@@ -5,7 +5,7 @@
 //  Created by ALEXEY GLUSHKOV on 06.11.11.
 //  Copyright (c) 2011 News360. All rights reserved.
 //
-
+#ifdef MEMTEST_ON
 #import "NSMemArgLeaks.h"
 
 extern NSMutableArray* suggestedLeaks;
@@ -35,3 +35,4 @@ extern NSMutableArray* suggestedLeaks;
 }
 
 @end
+#endif

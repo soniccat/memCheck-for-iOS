@@ -6,35 +6,30 @@
 //  Copyright (c) 2011 News360. All rights reserved.
 //
 #ifdef MEMTEST_ON
-#import "NSMemFilterWithout.h"
+#import "NSMemFilterFromList.h"
 #import "NSArray+MemCheck.h"
+#import "ClassesSet.h"
 
-@interface NSMemFilterWithout()
+@implementation NSMemFilterFromList
 
-@property(nonatomic,retain) NSString* className;
-
-@end
-
-
-@implementation NSMemFilterWithout
-
-@synthesize className;
 @synthesize inputMemCheckObjects;
 
 - (NSArray*)outputMemCheckObjects
 {
-    return [inputMemCheckObjects objectsWithoutClass:self.className];
+    if(!classesSet)
+        initClassSet();
+    
+    return [self.inputMemCheckObjects objectsWithClassFromSet: classesSet ];
 }
 
 - (BOOL)canParse:(NSArray*)strings
 {
-    if( [strings count] < 2 )
+    if( ![strings count] )
         return NO;
     
-    if( [[strings objectAtIndex:0] isEqualToString:@"without"] )
-    {
+    if( [[strings objectAtIndex:0] isEqualToString:@"fromList"] )
         return YES;
-    }
+    
     return NO;
 }
 
@@ -42,14 +37,7 @@
 {
     NSAssert( [self canParse:strings], @"need call canParse before");
     
-    self.className = [strings objectAtIndex:1];
-    return 2;
-}
-
-- (void)dealloc
-{
-    self.className = nil;
-    [super dealloc];
+    return 1;
 }
 
 @end

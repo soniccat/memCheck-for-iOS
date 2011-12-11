@@ -16,13 +16,41 @@
 #import <objc/message.h>
 #import <objc/objc.h>
 #import "NSMemCheckObject.h"
-#import "NSMutableArray+MemCheck.h"
+#import "NSArray+MemCheck.h"
 #import "NSMemCheckParser.h"
 #import "NSMemCheckHeap.h"
 
 NSMutableArray* memData;    //list of allocated objects
 NSMutableArray* removedMemData; //list of removed objects from the memData
 NSMutableArray* suggestedLeaks; 
+
+NSSet* classesToFilter; //set of the classes which should be missed
+#define CLASSES_TO_FILTER @"UITouch"
+
+#define TOLL_FREE_BRIDGE_CLASSES @"NSArray",\
+@"NSAttributedString",\
+@"NSCalendar",\
+@"NSCharacterSet",\
+@"NSData",\
+@"NSDate",\
+@"NSDictionary",\
+@"NSError",\
+@"NSLocale",\
+@"NSMutableArray",\
+@"NSMutableAttributedString",\
+@"NSMutableCharacterSet",\
+@"NSMutableData",\
+@"NSMutableDictionary",\
+@"NSMutableSet",\
+@"NSMutableString",\
+@"NSNumber",\
+@"NSInputStream",\
+@"NSTimer",\
+@"NSSet",\
+@"NSString",\
+@"NSTimeZone",\
+@"NSURL",\
+@"NSOutputStream"
 
 extern NSMutableArray* heaps;
 extern NSMemCheckParser* parser;
@@ -147,6 +175,11 @@ RELEASE_METHOD_EXCHANGE
     if( parser == nil )
         parser = [[NSMemCheckParser alloc] init];
     
+    if( classesToFilter == nil )
+    {
+        classesToFilter = [[NSSet alloc] initWithArray:[NSArray arrayWithObjects: CLASSES_TO_FILTER, nil]];
+    }
+    
     //InstallUncaughtExceptionHandler();
     
 	//alloc
@@ -248,7 +281,7 @@ RELEASE_METHOD_EXCHANGE
 				break;
 			}
 		
-		if( !found )
+		if( !found && ![classesToFilter containsObject: NSStringFromClass([newPt class]) ] )
 		{
 			[NSObject turnMemCheckOff];
 			NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -348,27 +381,47 @@ RELEASE_METHOD_EXCHANGE
             if( returnObj != nil )
             {
                 //look in memory
-                //BOOL found = NO;
-                for(NSMemCheckObject* memObj2 in memData)
+                NSMemCheckObject* memObj2 = [memData memCheckObjectByPointer:returnObj];
+                
+                if( ![classesToFilter containsObject: memObj2.className ] )
                 {
-                    if( memObj2.pointerValue == returnObj && !memObj2.isDead && [memObj.pointerValue retainCount] >= 1 )
-                    {               
-                        [memObj2 addOwner: [NSMemCheckOwnerInfo memCheckOwnerInfoWithPropertyName:key object:memObj]];
-                        //[memObj2.owners addObject:[NSString stringWithFormat:@"[%@ %p %@]",memObj.className, self, key]];
-                        
-                        if( [self retainCount] == 1 )
-                        {
-                            //search other owner
+                    if( memObj2)
+                    {
+                        if( ![memObj2.owners containsObject:memObj] && !memObj2.isDead /*&& [memObj.pointerValue retainCount] >= 1*/ )
+                        {  
+                            [memObj2 addOwner: [NSMemCheckOwnerInfo memCheckOwnerInfoWithPropertyName:key object:memObj]];
+                            //[memObj2.owners addObject:[NSString stringWithFormat:@"[%@ %p %@]",memObj.className, self, key]];
                             
-                            if(![suggestedLeaks containsObject:memObj2])
-                                [suggestedLeaks addObject:memObj2];
+                            if( [self retainCount] == 1 )
+                            {
+                                //search other owner
+                                
+                                if(![suggestedLeaks containsObject:memObj2])
+                                    [suggestedLeaks addObject:memObj2];
+                            }
                         }
+                    }else
+                    {
+                        NSSet* tollFreeBridgeSet = [NSSet setWithArray:[NSArray arrayWithObjects:TOLL_FREE_BRIDGE_CLASSES, nil]];
                         
-                        break;
+                        if( ![tollFreeBridgeSet containsObject: NSStringFromClass( [returnObj class] ) ] )
+                        {
+                            //add missed object in memData
+                            NSMemCheckObject* obj = [[[NSMemCheckObject alloc] initWithPointer:returnObj] autorelease];
+                            [memData addObject:obj];
+                            [obj addOwner:[NSMemCheckOwnerInfo memCheckOwnerInfoWithPropertyName:key object:memObj]];
+                            
+                            if( [self retainCount] == 1 )
+                            {
+                                //search other owner
+                                if(![suggestedLeaks containsObject:obj])
+                                    [suggestedLeaks addObject:obj];
+                            }
+                        }
                     }
                 }
-                
-                //if(found)
+                    
+                    
                 //if( [returnObj isKindOfClass:[NSObject class]] )
                 //    printf( "%p", returnObj );
             }

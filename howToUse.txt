@@ -1,0 +1,5 @@
+
+>>>>>>> .r1693
+ [parser run:@"leaks fromList withOwners withOwnersLessThan 5 without UIImage saveGraph /Users/alexeyglushkov/Documents/dot/mem.txt"]
+
+[parser run:@"heap 1 + heap 2 withOwners withOwnersLessThan 5 without UIImage saveGraph /Users/alexeyglushkov/Documents/dot/mem.txt"]

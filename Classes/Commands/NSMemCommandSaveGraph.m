@@ -5,7 +5,7 @@
 //  Created by ALEXEY GLUSHKOV on 06.11.11.
 //  Copyright (c) 2011 News360. All rights reserved.
 //
-
+#ifdef MEMTEST_ON
 #import "NSMemCommandSaveGraph.h"
 #import "NSArray+MemCheck.h"
 
@@ -53,3 +53,4 @@
 }
 
 @end
+#endif

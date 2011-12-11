@@ -5,7 +5,7 @@
 //  Created by ALEXEY GLUSHKOV on 29.10.11.
 //  Copyright (c) 2011 News360. All rights reserved.
 //
-
+#ifdef MEMTEST_ON
 #import <Foundation/Foundation.h>
 
 @interface NSMemCheckHeap : NSObject
@@ -23,3 +23,4 @@
 + (void) markHeap;
 
 @end
+#endif

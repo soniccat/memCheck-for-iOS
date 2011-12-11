@@ -6,6 +6,8 @@
 //  Copyright (c) 2011 News360. All rights reserved.
 //
 
+#ifdef MEMTEST_ON
+
 #import "NSArray+MemCheck.h"
 #import "NSObject+MemCheck.h"
 #import "NSMemCheckObject.h"
@@ -25,6 +27,29 @@ typedef BOOL (^MemCheckArrayFilterBlock)(NSMemCheckObject* obj);
 
 
 @implementation NSArray(MemCheck)
+
+- (NSMemCheckObject*) memCheckObjectByPointer:(id)obj
+{
+	for(NSMemCheckObject* item in self)
+		if( item.pointerValue == obj )
+			return item;
+	
+	return nil;
+}
+
+- (NSString*) allMem
+{
+	return [NSString stringWithFormat:@"%d items\n%@", [self count], [self description]];
+}
+
+- (NSArray*) top:(NSInteger)top
+{
+	NSInteger count = top;
+	if( count > [self count] )
+		count = [self count];
+	
+    return [[self subarrayWithRange:NSMakeRange(0, count)] mutableCopy];
+}
 
 - (NSString*) stringWithMemCheckObjects
 {
@@ -189,6 +214,14 @@ typedef BOOL (^MemCheckArrayFilterBlock)(NSMemCheckObject* obj);
     return [self filterMemObjArray:^(NSMemCheckObject* obj)
             {
                 return (BOOL)![obj.className isEqualToString:className];
+            }];
+}
+
+- (NSArray*) objectsWithClassFromSet:(NSSet*)classSet
+{
+    return [self filterMemObjArray:^(NSMemCheckObject* obj)
+            {
+                return (BOOL)[classSet containsObject:obj.className];
             }];
 }
 
@@ -442,3 +475,5 @@ typedef BOOL (^MemCheckArrayFilterBlock)(NSMemCheckObject* obj);
 }
 
 @end
+
+#endif

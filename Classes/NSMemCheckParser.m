@@ -5,7 +5,7 @@
 //  Created by ALEXEY GLUSHKOV on 31.10.11.
 //  Copyright (c) 2011 News360. All rights reserved.
 //
-
+#ifdef MEMTEST_ON
 #import "NSMemCheckParser.h"
 
 #import "NSMemArgAll.h"
@@ -20,6 +20,7 @@
 #import "NSMemFilterWithOwners.h"
 #import "NSMemFilterWithOwnersLessThan.h"
 #import "NSMemFilterWithout.h"
+#import "NSMemFilterFromList.h"
 
 #import "NSMemCommandPrint.h"
 #import "NSMemCommandMarkHeap.h"
@@ -59,7 +60,8 @@ NSMemCheckParser* parser;
                         [[[NSMemFilterWithoutOwners alloc] init] autorelease],
                         [[[NSMemFilterWithOwners alloc] init] autorelease],
                         [[[NSMemFilterWithOwnersLessThan alloc] init] autorelease],
-                        [[[NSMemFilterWithout alloc] init] autorelease],nil];
+                        [[[NSMemFilterWithout alloc] init] autorelease],
+                        [[[NSMemFilterFromList alloc] init] autorelease],nil];
         
         self.commands = [NSMutableArray arrayWithObjects: [[[NSMemCommandPrint alloc] init] autorelease],
                          [[[NSMemCommandMarkHeap alloc] init] autorelease],
@@ -145,16 +147,31 @@ NSMemCheckParser* parser;
     NSArray* memObjects = nil;
     
     //detect input array
-    for( id<NSMemCheckParseArgument> argument in self.arguments )
+    
+    while( true )
     {
-        if( [argument canParse:strings] )
+        for( id<NSMemCheckParseArgument> argument in self.arguments )
         {
-            startIndex = [argument parse:strings];
-            memObjects = argument.memCheckObjects;
-            
-            [strings removeObjectsInRange:NSMakeRange(0, startIndex)];
-            break;
+            if( [argument canParse:strings] )
+            {
+                startIndex = [argument parse:strings];
+                NSArray* objects = argument.memCheckObjects;
+                
+                if( !memObjects )
+                    memObjects = objects;
+                else
+                    memObjects = [memObjects arrayByAddingObjectsFromArray:objects];
+                
+                [strings removeObjectsInRange:NSMakeRange(0, startIndex)];
+                break;
+            }
         }
+        
+        if( [strings count] && [[strings objectAtIndex:0] isEqualToString:@"+"] )
+        {
+            [strings removeObjectsInRange:NSMakeRange(0, 1)];
+        }else
+            break;
     }
     
     //use filters
@@ -220,3 +237,4 @@ NSMemCheckParser* parser;
 }
 
 @end
+#endif

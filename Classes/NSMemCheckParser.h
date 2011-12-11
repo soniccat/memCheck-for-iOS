@@ -5,7 +5,7 @@
 //  Created by ALEXEY GLUSHKOV on 31.10.11.
 //  Copyright (c) 2011 News360. All rights reserved.
 //
-
+#ifdef MEMTEST_ON
 #import <Foundation/Foundation.h>
 
 @protocol NSMemCheckParseItem <NSObject>
@@ -49,6 +49,7 @@
 - (id)init;
 - (void)parse:(NSString*)command;
 
-+ (void)run:(NSString*)command;
+- (void)run:(NSString*)command;
 
 @end
+#endif

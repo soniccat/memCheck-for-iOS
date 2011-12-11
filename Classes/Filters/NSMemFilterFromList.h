@@ -1,5 +1,5 @@
 //
-//  NSMemCommandPrint.h
+//  NSMemFilterWithOwnersLessThan.h
 //  News360Core
 //
 //  Created by ALEXEY GLUSHKOV on 06.11.11.
@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "NSMemCheckParser.h"
 
-@interface NSMemCommandShowHeaps : NSObject <NSMemCheckParseCommand>
+@interface NSMemFilterFromList : NSObject <NSMemCheckParseFilter>
 {
-    NSArray* inputMemCheckObjects;
+    NSArray* inputMemCheckObject;
 }
 
 @property(nonatomic,retain) NSArray* inputMemCheckObjects;

@@ -10,9 +10,6 @@
 
 #import <Foundation/Foundation.h>
 
-#warning need remove that
-extern NSMutableArray* memData;
-
 @interface NSObject (memCheck) 
 
 + (void) turnMemCheckOn;

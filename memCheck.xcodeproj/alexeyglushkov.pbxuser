@@ -97,26 +97,24 @@
 			PBXWorkspaceStateSaveDate = 321090957;
 		};
 		perUserProjectItems = {
-			D619F2E31314EB3300861659 = D619F2E31314EB3300861659 /* PBXTextBookmark */;
-			D61C0A871315057700D0D31E = D61C0A871315057700D0D31E /* PBXTextBookmark */;
-			D61C0ABB1315090900D0D31E = D61C0ABB1315090900D0D31E /* PBXTextBookmark */;
-			D61C0AD013150AA300D0D31E = D61C0AD013150AA300D0D31E /* PBXTextBookmark */;
-			D61C0AF213150D1500D0D31E = D61C0AF213150D1500D0D31E /* PBXTextBookmark */;
-			D61C0B64131516C500D0D31E = D61C0B64131516C500D0D31E /* PBXTextBookmark */;
-			D61C0B65131516C500D0D31E = D61C0B65131516C500D0D31E /* PBXTextBookmark */;
-			D61C0B66131516C500D0D31E = D61C0B66131516C500D0D31E /* PBXTextBookmark */;
-			D61C0B7C1315172900D0D31E = D61C0B7C1315172900D0D31E /* PBXTextBookmark */;
-			D61C0B821315180200D0D31E = D61C0B821315180200D0D31E /* PBXTextBookmark */;
-			D61C0B831315180200D0D31E = D61C0B831315180200D0D31E /* PBXTextBookmark */;
-			D61C0B89131518E600D0D31E = D61C0B89131518E600D0D31E /* PBXTextBookmark */;
-			D647B0AB131453F500EC2C63 = D647B0AB131453F500EC2C63 /* PBXTextBookmark */;
-			D647B0AF131453F500EC2C63 = D647B0AF131453F500EC2C63 /* PlistBookmark */;
-			D66E43D9130EB9D300E2C163 = D66E43D9130EB9D300E2C163 /* PBXTextBookmark */;
-			D66E4465130EC61D00E2C163 = D66E4465130EC61D00E2C163 /* PBXTextBookmark */;
-			D66E4498130ECA8F00E2C163 = D66E4498130ECA8F00E2C163 /* PBXTextBookmark */;
-			D66E4499130ECA8F00E2C163 = D66E4499130ECA8F00E2C163 /* PBXTextBookmark */;
-			D6D77B371314DDBE002EA449 = D6D77B371314DDBE002EA449 /* PBXTextBookmark */;
-			D6E5A46313116BEA0048C7D4 = D6E5A46313116BEA0048C7D4 /* PBXTextBookmark */;
+			D61C0A871315057700D0D31E /* PBXTextBookmark */ = D61C0A871315057700D0D31E /* PBXTextBookmark */;
+			D61C0ABB1315090900D0D31E /* PBXTextBookmark */ = D61C0ABB1315090900D0D31E /* PBXTextBookmark */;
+			D647B0AB131453F500EC2C63 /* PBXTextBookmark */ = D647B0AB131453F500EC2C63 /* PBXTextBookmark */;
+			D647B0AF131453F500EC2C63 /* PlistBookmark */ = D647B0AF131453F500EC2C63 /* PlistBookmark */;
+			D66E43D9130EB9D300E2C163 /* PBXTextBookmark */ = D66E43D9130EB9D300E2C163 /* PBXTextBookmark */;
+			D66E4465130EC61D00E2C163 /* PBXTextBookmark */ = D66E4465130EC61D00E2C163 /* PBXTextBookmark */;
+			D66E4498130ECA8F00E2C163 /* PBXTextBookmark */ = D66E4498130ECA8F00E2C163 /* PBXTextBookmark */;
+			D66E4499130ECA8F00E2C163 /* PBXTextBookmark */ = D66E4499130ECA8F00E2C163 /* PBXTextBookmark */;
+			D6D77B371314DDBE002EA449 /* PBXTextBookmark */ = D6D77B371314DDBE002EA449 /* PBXTextBookmark */;
+			D6DC23BA1323BE7600037B65 /* PBXTextBookmark */ = D6DC23BA1323BE7600037B65 /* PBXTextBookmark */;
+			D6DC23BB1323BE7600037B65 /* PBXTextBookmark */ = D6DC23BB1323BE7600037B65 /* PBXTextBookmark */;
+			D6DC23BC1323BE7600037B65 /* PBXTextBookmark */ = D6DC23BC1323BE7600037B65 /* PBXTextBookmark */;
+			D6DC23BD1323BE7600037B65 /* PBXTextBookmark */ = D6DC23BD1323BE7600037B65 /* PBXTextBookmark */;
+			D6DC23BE1323BE7600037B65 /* PBXTextBookmark */ = D6DC23BE1323BE7600037B65 /* PBXTextBookmark */;
+			D6DC23BF1323BE7600037B65 /* PBXTextBookmark */ = D6DC23BF1323BE7600037B65 /* PBXTextBookmark */;
+			D6DC23C01323BE7600037B65 /* PBXTextBookmark */ = D6DC23C01323BE7600037B65 /* PBXTextBookmark */;
+			D6DC23C11323BE7600037B65 /* PBXTextBookmark */ = D6DC23C11323BE7600037B65 /* PBXTextBookmark */;
+			D6E5A46313116BEA0048C7D4 /* PBXTextBookmark */ = D6E5A46313116BEA0048C7D4 /* PBXTextBookmark */;
 		};
 		sourceControlManager = D66E436B130EB1ED00E2C163 /* Source Control */;
 		userBuildSettings = {
@@ -135,16 +133,6 @@
 			sepNavSelRange = "{245, 0}";
 			sepNavVisRange = "{0, 245}";
 		};
-	};
-	D619F2E31314EB3300861659 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D66E4643130EE99700E2C163 /* NSObject+MemCheck.h */;
-		name = "NSObject+MemCheck.h: 13";
-		rLen = 0;
-		rLoc = 207;
-		rType = 0;
-		vrLen = 323;
-		vrLoc = 0;
 	};
 	D61C0A871315057700D0D31E /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -165,122 +153,6 @@
 		rType = 0;
 		vrLen = 637;
 		vrLoc = 843;
-	};
-	D61C0AC41315094A00D0D31E /* NSArray+MemCheck.h */ = {
-		isa = PBXFileReference;
-		fileEncoding = 4;
-		lastKnownFileType = sourcecode.c.h;
-		name = "NSArray+MemCheck.h";
-		path = "/Users/alexeyglushkov/iPhoneProjects/memCheck/Classes/NSArray+MemCheck.h";
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1038, 622}}";
-			sepNavSelRange = "{173, 0}";
-			sepNavVisRange = "{0, 251}";
-		};
-	};
-	D61C0AC51315094A00D0D31E /* NSArray+MemCheck.m */ = {
-		isa = PBXFileReference;
-		fileEncoding = 4;
-		lastKnownFileType = sourcecode.c.objc;
-		name = "NSArray+MemCheck.m";
-		path = "/Users/alexeyglushkov/iPhoneProjects/memCheck/Classes/NSArray+MemCheck.m";
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1038, 622}}";
-			sepNavSelRange = "{231, 0}";
-			sepNavVisRange = "{0, 245}";
-		};
-	};
-	D61C0AD013150AA300D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D6E5A3C513115EF20048C7D4 /* NSMutableArray+MemCheck.h */;
-		name = "NSMutableArray+MemCheck.h: 9";
-		rLen = 17;
-		rLoc = 159;
-		rType = 0;
-		vrLen = 403;
-		vrLoc = 0;
-	};
-	D61C0AF213150D1500D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D61C0AC41315094A00D0D31E /* NSArray+MemCheck.h */;
-		name = "NSArray+MemCheck.h: 9";
-		rLen = 0;
-		rLoc = 173;
-		rType = 0;
-		vrLen = 251;
-		vrLoc = 0;
-	};
-	D61C0B64131516C500D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D61C0AC51315094A00D0D31E /* NSArray+MemCheck.m */;
-		name = "NSArray+MemCheck.m: 14";
-		rLen = 0;
-		rLoc = 231;
-		rType = 0;
-		vrLen = 245;
-		vrLoc = 0;
-	};
-	D61C0B65131516C500D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D6E5A3C613115EF20048C7D4 /* NSMutableArray+MemCheck.m */;
-		name = "NSMutableArray+MemCheck.m: 15";
-		rLen = 0;
-		rLoc = 285;
-		rType = 0;
-		vrLen = 617;
-		vrLoc = 0;
-	};
-	D61C0B66131516C500D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D66E457C130EDACC00E2C163 /* NSMemCheckObject.h */;
-		name = "NSMemCheckObject.h: 38";
-		rLen = 0;
-		rLoc = 808;
-		rType = 0;
-		vrLen = 742;
-		vrLoc = 383;
-	};
-	D61C0B7C1315172900D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D66E4644130EE99700E2C163 /* NSObject+MemCheck.m */;
-		name = "NSObject+MemCheck.m: 204";
-		rLen = 0;
-		rLoc = 5009;
-		rType = 0;
-		vrLen = 744;
-		vrLoc = 5161;
-	};
-	D61C0B821315180200D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D66E457D130EDACC00E2C163 /* NSMemCheckObject.m */;
-		name = "NSMemCheckObject.m: 78";
-		rLen = 0;
-		rLoc = 1487;
-		rType = 0;
-		vrLen = 911;
-		vrLoc = 1464;
-	};
-	D61C0B831315180200D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 1D3623250D0F684500981E51 /* memCheckAppDelegate.m */;
-		name = "memCheckAppDelegate.m: 51";
-		rLen = 0;
-		rLoc = 1018;
-		rType = 0;
-		vrLen = 917;
-		vrLoc = 750;
-	};
-	D61C0B89131518E600D0D31E /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 1D3623250D0F684500981E51 /* memCheckAppDelegate.m */;
-		name = "memCheckAppDelegate.m: 57";
-		rLen = 0;
-		rLoc = 1160;
-		rType = 0;
-		vrLen = 927;
-		vrLoc = 804;
 	};
 	D647B0AB131453F500EC2C63 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -421,28 +293,28 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1038, 1007}}";
 			sepNavSelRange = "{808, 0}";
-			sepNavVisRange = "{383, 742}";
+			sepNavVisRange = "{334, 791}";
 		};
 	};
 	D66E457D130EDACC00E2C163 /* NSMemCheckObject.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1316, 2983}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1316, 3040}}";
 			sepNavSelRange = "{1487, 0}";
-			sepNavVisRange = "{1328, 288}";
+			sepNavVisRange = "{1429, 947}";
 		};
 	};
 	D66E4643130EE99700E2C163 /* NSObject+MemCheck.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1038, 447}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1038, 599}}";
 			sepNavSelRange = "{207, 0}";
 			sepNavVisRange = "{0, 323}";
 		};
 	};
 	D66E4644130EE99700E2C163 /* NSObject+MemCheck.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {950, 4750}}";
-			sepNavSelRange = "{5919, 0}";
-			sepNavVisRange = "{4167, 416}";
+			sepNavIntBoundsRect = "{{0, 0}, {1038, 5529}}";
+			sepNavSelRange = "{5009, 0}";
+			sepNavVisRange = "{5117, 885}";
 		};
 	};
 	D6D77B371314DDBE002EA449 /* PBXTextBookmark */ = {
@@ -455,18 +327,98 @@
 		vrLen = 500;
 		vrLoc = 0;
 	};
+	D6DC23BA1323BE7600037B65 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* memCheckAppDelegate.m */;
+		name = "memCheckAppDelegate.m: 57";
+		rLen = 0;
+		rLoc = 1160;
+		rType = 0;
+		vrLen = 1119;
+		vrLoc = 762;
+	};
+	D6DC23BB1323BE7600037B65 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D6E5A3C613115EF20048C7D4 /* NSMutableArray+MemCheck.m */;
+		name = "NSMutableArray+MemCheck.m: 7";
+		rLen = 0;
+		rLoc = 157;
+		rType = 0;
+		vrLen = 596;
+		vrLoc = 0;
+	};
+	D6DC23BC1323BE7600037B65 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D66E4643130EE99700E2C163 /* NSObject+MemCheck.h */;
+		name = "NSObject+MemCheck.h: 13";
+		rLen = 0;
+		rLoc = 207;
+		rType = 0;
+		vrLen = 323;
+		vrLoc = 0;
+	};
+	D6DC23BD1323BE7600037B65 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D66E4644130EE99700E2C163 /* NSObject+MemCheck.m */;
+		name = "NSObject+MemCheck.m: 203";
+		rLen = 0;
+		rLoc = 5009;
+		rType = 0;
+		vrLen = 885;
+		vrLoc = 5117;
+	};
+	D6DC23BE1323BE7600037B65 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D66E457D130EDACC00E2C163 /* NSMemCheckObject.m */;
+		name = "NSMemCheckObject.m: 78";
+		rLen = 0;
+		rLoc = 1487;
+		rType = 0;
+		vrLen = 947;
+		vrLoc = 1429;
+	};
+	D6DC23BF1323BE7600037B65 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D66E457C130EDACC00E2C163 /* NSMemCheckObject.h */;
+		name = "NSMemCheckObject.h: 38";
+		rLen = 0;
+		rLoc = 808;
+		rType = 0;
+		vrLen = 791;
+		vrLoc = 334;
+	};
+	D6DC23C01323BE7600037B65 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D6E5A3C513115EF20048C7D4 /* NSMutableArray+MemCheck.h */;
+		name = "NSMutableArray+MemCheck.h: 9";
+		rLen = 17;
+		rLoc = 159;
+		rType = 0;
+		vrLen = 508;
+		vrLoc = 0;
+	};
+	D6DC23C11323BE7600037B65 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D6E5A3C513115EF20048C7D4 /* NSMutableArray+MemCheck.h */;
+		name = "NSMutableArray+MemCheck.h: 23";
+		rLen = 0;
+		rLoc = 494;
+		rType = 0;
+		vrLen = 508;
+		vrLoc = 0;
+	};
 	D6E5A3C513115EF20048C7D4 /* NSMutableArray+MemCheck.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1038, 622}}";
-			sepNavSelRange = "{159, 17}";
+			sepNavSelRange = "{494, 0}";
 			sepNavVisRange = "{0, 508}";
 		};
 	};
 	D6E5A3C613115EF20048C7D4 /* NSMutableArray+MemCheck.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1038, 1919}}";
-			sepNavSelRange = "{285, 0}";
-			sepNavVisRange = "{0, 620}";
+			sepNavSelRange = "{157, 0}";
+			sepNavVisRange = "{0, 596}";
 		};
 	};
 	D6E5A46313116BEA0048C7D4 /* PBXTextBookmark */ = {

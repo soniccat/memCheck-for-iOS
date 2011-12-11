@@ -224,7 +224,7 @@
 		else
 			retainInfo = nil;
 		
-		if( releaseInfo != nil && retainInfo == nil || [releaseInfo.date compare:retainInfo.date] == NSOrderedAscending )
+		if( (releaseInfo != nil && retainInfo == nil) || [releaseInfo.date compare:retainInfo.date] == NSOrderedAscending )
 		{
 			[outString appendFormat:@"RELEASE:\n%@\n", [releaseInfo description]];
 			++releaseIndex;
