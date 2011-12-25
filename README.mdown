@@ -89,12 +89,12 @@ A most useful command to save information about your leaks:
 ###Using saveGraph command###
 A saveGraph command creates a text file. In the above example its name is "mem.txt". To convert the file to a dot file we should run the next script: dot -Tdot mem.txt -o mem.dot && open ./mem.dot. It will show a graph with objects, relations between them and marks of heaps. 
 
-![dot graph](./blob/master/images/pic1.png)
+![dot graph](./memCheck-for-iOS/blob/master/images/pic1.png)
 pic 1 
 
 Timeline and mark of heap is displayed at left part in picture. 
 
-![dot graph](./blob/master/images/pic2.png)
+![dot graph](./memCheck-for-iOS/blob/master/images/pic2.png)
 pic 2
 
 An arrow from the DetailViewController to the UILabel means that an object of DetailViewController contains an object of UILabel. A dotted arrow shows when an object dead. Live objects have a white background, dead objects have a gray background.
