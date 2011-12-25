@@ -7,6 +7,7 @@ MemCheck helps to find memory leaks in your iOS applications. It can register al
 Add files from Classes folder to your project expect memCheckAppDelegate and memCheckViewController.
 
 add in the tail of your pch file
+
     #define MEMTEST_ON
 
 add in the top of the application: didFinishLaunchingWithOptions: function
@@ -97,6 +98,10 @@ To display all owners you should enter an "owners" command for a pointer of wrap
 
 
 ###Examples###
+
+Print all allocated objects:
+
+    po [parser run:@"all print"]
 
 A most useful command to save information about your leaks:
 
