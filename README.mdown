@@ -45,7 +45,9 @@ A command performs specific actions with a filtered list of objects
 **saveGraph %PathToFile** - save a input file for a dot program (http://www.graphviz.org/) to a specified path  
 **showHeaps** - show a list of saved heaps
 
-You can combine several commands after a gap. All commands will not change the list of objects. For example: heap 1 + heap 2 without UIImage withOwnersLessThan 5 print saveGraph /Users/yourname/Documents/dot/mem.txt.
+You can combine several commands after a gap. All commands will not change the list of objects. For example: 
+
+    heap 1 + heap 2 without UIImage withOwnersLessThan 5 print saveGraph /Users/yourname/Documents/dot/mem.txt.
 
 ###Using###
 To call an action you should pause your application in the Xcode debugger and type po [parser run:@"your action"] and press the "Enter". But a result will not be displayed immediately. The action will be started when you press the continue button. To stop automatically when the action will be finished you should add a breakpoint at the end of the parse: function in NSMemCheckParser.m. 
@@ -87,7 +89,11 @@ A most useful command to save information about your leaks:
 
 
 ###Using saveGraph command###
-A saveGraph command creates a text file. In the above example its name is "mem.txt". To convert the file to a dot file we should run the next script: dot -Tdot mem.txt -o mem.dot && open ./mem.dot. It will show a graph with objects, relations between them and marks of heaps. 
+A saveGraph command creates a text file. In the above example its name is "mem.txt". To convert the file to a dot file we should run the next script: 
+
+    dot -Tdot mem.txt -o mem.dot && open ./mem.dot. 
+
+It will show a graph with objects, relations between them and marks of heaps. 
 
 ![dot graph](./memCheck-for-iOS/raw/master/images/pic1.png)
 pic 1 
