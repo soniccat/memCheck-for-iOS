@@ -56,7 +56,7 @@ The library wraps an allocated object in NSMemCheckObject. There is a descriptio
     2011-12-11 11:56:04 +0000 memCheckObject 0x68d0fd0 object 0x68cef80 stack 0x0 DEAD UILabel  
 	owner (detailDescriptionLabel 2011-12-11 11:56:04 +0000 memCheckObject 0x68c3eb0 object 0x68c3de0 stack 0x68c4050 DEAD DetailViewController  
 	owner (sceneViewController 2011-12-11 11:56:04 +0000 memCheckObject 0x68be640 object 0x68bf1d0 stack 0x68bf2f0 DEAD UIStoryboardScene  )
-)
+    )
 
 *2011-12-11 11:56:04 +0000* - the allocated time  
 *memCheckObject 0x68d0fd0* - itself pointer  
@@ -89,12 +89,12 @@ A most useful command to save information about your leaks:
 ###Using saveGraph command###
 A saveGraph command creates a text file. In the above example its name is "mem.txt". To convert the file to a dot file we should run the next script: dot -Tdot mem.txt -o mem.dot && open ./mem.dot. It will show a graph with objects, relations between them and marks of heaps. 
 
-![dot graph](./images/pic1.png)
+![dot graph](./blob/master/images/pic1.png)
 pic 1 
 
 Timeline and mark of heap is displayed at left part in picture. 
 
-![dot graph](./images/pic2.png)
+![dot graph](./blob/master/images/pic2.png)
 pic 2
 
 An arrow from the DetailViewController to the UILabel means that an object of DetailViewController contains an object of UILabel. A dotted arrow shows when an object dead. Live objects have a white background, dead objects have a gray background.
