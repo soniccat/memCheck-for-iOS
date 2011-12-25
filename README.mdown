@@ -1,142 +1,117 @@
-MemCheck helps to find memory leaks in your iOS applications. It can register alloc, retain and release call for NS-objects and show detail information in console.
+That's new edition of documentation. A old edition also works but shouldn't be used.
 
-### Connect library
+All actions should be run through parser: 
 
-Add 6 files to your project:
+    po [parser run:@"your action"]. 
+    
+Action consists of arguments, filters and commands. All of them follow each other.
 
-* NSMemCheckObject.h
-* NSMemCheckObject.m
-* NSMutableArray+MemCheck.h
-* NSMutableArray+MemCheck.m
-* NSObject+MemCheck.h
-* NSObject+MemCheck.m
+###Arguments###
+An argument describes which list of objects you want to use.
 
-add in tail of your pch file
-    #define MEMTEST_ON
+**all** - live objects which wasn't deallocated  
+**dead** - deallocated objects  
+**heap %Number** - live objects for a specified heap  
+**leaks** - leaked objects
 
-add in the top of the application: didFinishLaunchingWithOptions: function
+You can combine several arguments using '+' symbol. For example: heap 1 + heap 2.
 
-    #ifdef MEMTEST_ON
-    [NSObject turnMemCheckOn];
-    #endif
+###Filters###
+A filter removes unnecessary objects from list of objects
 
-### Using
+**heap %Number** - leave objects for a specified heap  
+**withLiveOwners** - leave objects with live owners. An owner of object is who contains a retain property on it.  
+**withoutLiveOwners** - remove objects with live owners  
+**withoutOwners** - leave objects without owners  
+**withOwners** - leave objects with owners  
+**withOwnersLessThan %Count** - leave objects with less than a specified number of owners  
+**without %ClassName** - remove objects with a specified Class  
+**fromList** - leave objects with class from a ClassesSet.m. The file should be generated for your project by a CreateClassesSet.rb script. You should call the script in a root folder of your project:
 
-When you app is running in any moment you can press pause button and print in the Xcode's console:
+    ruby ./CreateClassesSet.rb ./
 
-**po [memData allMem]**
+Then you should replace base reateClassesSet.rb with a new one.  
 
-return output like that
-    14 items
-    (
-    "2011-02-23 06:47:04 +0000 memCheckObject 0x4b45840 object 0x4b45530 stack 0x4b45a00 NSCountedSet",
-    ..
-    }
+You can combine several filters after a gap. The result of first filter will pass to the input of second filter. For example: 
 
-14 is all registered objects, which exist in memory at this moment. The list starts with last allocated object.
+    heap 1 + heap 2 without UIImage withOwnersLessThan 5.
 
-address after memCheckObject point to wrapper object
+###Commands###
+A command performs specific actions with a filtered list of objects
 
-address after object point to allocated object
+**markHeap** - mark heap  
+**markHeapWithName %Name** - mark heap with specified name  
+**print** - print information about objects  
+**saveGraph %PathToFile** - save a input file for a dot program (http://www.graphviz.org/) to a specified path  
+**showHeaps** - show a list of saved heaps
 
-address after stack point to alloc callstack
+You can combine several commands after a gap. All commands will not change the list of objects. For example: heap 1 + heap 2 without UIImage withOwnersLessThan 5 print saveGraph /Users/yourname/Documents/dot/mem.txt.
 
-NSCountedSet is allocated object's class
+###Using###
+To call an action you should pause your application in the Xcode debugger and type po [parser run:@"your action"] and press the "Enter". But a result will not be displayed immediately. The action will be started when you press the continue button. To stop automatically when the action will be finished you should add a breakpoint at the end of the parse: function in NSMemCheckParser.m. 
 
-**po [memData top:N]**
+A description of objects
+The library wraps an allocated object in NSMemCheckObject. There is a description for one of them:
 
-return only N last allocated objects
+    2011-12-11 11:56:04 +0000 memCheckObject 0x68d0fd0 object 0x68cef80 stack 0x0 DEAD UILabel  
+	owner (detailDescriptionLabel 2011-12-11 11:56:04 +0000 memCheckObject 0x68c3eb0 object 0x68c3de0 stack 0x68c4050 DEAD DetailViewController  
+	owner (sceneViewController 2011-12-11 11:56:04 +0000 memCheckObject 0x68be640 object 0x68bf1d0 stack 0x68bf2f0 DEAD UIStoryboardScene  )
+)
 
-**po *address_of_object* **
+*2011-12-11 11:56:04 +0000* - the allocated time  
+*memCheckObject 0x68d0fd0* - itself pointer  
+*object 0x68cef80* - the pointer to the wrapped object  
+*stack 0x0* - the pointer to a alloc stack of the wrapped object, it can be null  
+*DEAD* - that flag says that the wrapped objects is already deallocated  
+*UILabel* - the class of the wrapped object
 
-display defaul object's description
+If the wrapped object has an owner that information is displayed below after a "owner" keyword. Information of parent contains additional information at the beginning:
+detailDescriptionLabel - the name of property in the owner class which reference to the wrapped object
 
-**po *address_of_callstack* **
+If the owner contains its owner then information about that is displayed below. 
 
-display stack like that
+If the wrapped object contains 2 or more owners that is displayed shortly: 
 
-    <_NSCallStackArray 0x4b43750>(
-    0   CoreFoundation                      0x00da9be9 __exceptionPreprocess + 185,
-    1   libobjc.A.dylib                     0x00efe5c2 objc_exception_throw + 47,
-    2   inFoundation                        0x00002796 +[NSObject(memCheck) myAllocFunc] + 918,
-    3   inFoundation                        0x00001c81 -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 161,
-    4   UIKit                               0x002b31fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163,
-    ...
-    )
+    2011-12-11 19:33:54 +0000 memCheckObject 0x6abe390 object 0x68cfb10 stack 0x0 (0,0) UICFFont  owner 4
 
-**po [*address_of_wrapper_object* history]**
+To display all owners you should enter an "owners" command for a pointer of wrapped object:
 
-display callstacks for alloc, retain and release functions, ordered by date. It shows like that:
+    po [0x6abe390 owners]
 
-    ALLOC:
-    2011-02-23 06:26:56 +0000
-    (
-	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
-	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
-	2   memCheck                            0x0000310f +[NSObject(memCheck) myAllocFunc] + 831
-	3   memCheck                            0x000024d2 -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 98
-	4   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
-    ...
-    )
-    RETAIN:
-    2011-02-23 06:26:56 +0000
-    (
-	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
-	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
-	2   memCheck                            0x000034cf -[NSObject(memCheck) myRetainFunc] + 335
-	3   CoreFoundation                      0x00cbf0bc CFRetain + 92
-	4   CoreFoundation                      0x00da5db5 +[__NSArrayI __new::] + 117
-	5   CoreFoundation                      0x00d188a3 +[NSArray arrayWithObject:] + 67
-	6   memCheck                            0x00002508 -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 152
-	7   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
-    ...
-    )
-    RETAIN:
-    2011-02-23 06:26:56 +0000
-    (
-	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
-	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
-	2   memCheck                            0x000034cf -[NSObject(memCheck) myRetainFunc] + 335
-	3   memCheck                            0x00002538 -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 200
-	4   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
-    ...
-    )
-    RELEASE:
-    2011-02-23 06:26:56 +0000
-    (
-	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
-	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
-	2   memCheck                            0x000037ee -[NSObject(memCheck) myReleaseFunc] + 302
-	3   memCheck                            0x0000258d -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 285
-	4   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
-    ...
-    )
-    RETAIN:
-    2011-02-23 06:26:56 +0000
-    (
-	0   CoreFoundation                      0x00dacbe9 __exceptionPreprocess + 185
-	1   libobjc.A.dylib                     0x00f015c2 objc_exception_throw + 47
-	2   memCheck                            0x000034cf -[NSObject(memCheck) myRetainFunc] + 335
-	3   CoreFoundation                      0x00cbf0bc CFRetain + 92
-	4   CoreFoundation                      0x00da5db5 +[__NSArrayI __new::] + 117
-	5   CoreFoundation                      0x00d188a3 +[NSArray arrayWithObject:] + 67
-	6   memCheck                            0x000025ae -[inFoundationAppDelegate application:didFinishLaunchingWithOptions:] + 318
-	7   UIKit                               0x002b61fa -[UIApplication _callInitializationDelegatesForURL:payload:suspended:] + 1163
-    ...
-    )
 
-**po [*address_of_wrapper_object* retains] and po [*address_of_wrapper_object* releases]**
+###Examples###
 
-return callstacks for all retain or release calls, started with last.
+A most useful command to save information about your leaks:
 
-**po [memData markHeap]**
+    po [parser run:@"leaks fromList withOwners withOwnersLessThan 5 without UIImage saveGraph /Users/yourname/Documents/dot/mem.txt"]
 
-save current date which divide allocated object list on earlier and later parts
 
-**po [memData showHeaps]**
+###Using saveGraph command###
+A saveGraph command creates a text file. In the above example its name is "mem.txt". To convert the file to a dot file we should run the next script: dot -Tdot mem.txt -o mem.dot && open ./mem.dot. It will show a graph with objects, relations between them and marks of heaps. 
 
-show allocated group divided by saved dates
+![dot graph](./images/pic1.png)
+pic 1 
 
-**po [memData objectsForHeap:*n*]**
+Timeline and mark of heap is displayed at left part in picture. 
 
-return allocated object list in selected group
+![dot graph](./images/pic2.png)
+pic 2
+
+An arrow from the DetailViewController to the UILabel means that an object of DetailViewController contains an object of UILabel. A dotted arrow shows when an object dead. Live objects have a white background, dead objects have a gray background.
+
+The first pointer of object reference to an object of NSMemCheckObject. The second pointer reference on object directly. 
+
+###Using with ARC###
+Hmm, may be that is useful but I don't know. To allow that set -fno-objc-arc for all library files. For full description please see http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project.
+
+###Known issues###
+After run action sometimes you may see the message
+
+    The program being debugged hit an ObjC exception while in a function called from gdb.
+    If you don't want exception throws to interrupt functions called by gdb
+    set objc-exceptions-interrupt-hand-call-fns to off.
+    GDB remains in the frame where the signal was received.
+    To change this behavior use "set unwindonsignal on"
+    Evaluation of the expression containing the function (objc_msgSend) will be abandoned.
+
+press continue to continue action. If action was blocked repeat it.
