@@ -1,5 +1,20 @@
 That's new edition of documentation. A old edition also works but shouldn't be used.
 
+MemCheck helps to find memory leaks in your iOS applications. It can register alloc, retain and release call for NS-objects and show detail information in console.
+
+### Connect library
+
+Add files from Classes folder to your project expect memCheckAppDelegate and memCheckViewController.
+
+add in the tail of your pch file
+    #define MEMTEST_ON
+
+add in the top of the application: didFinishLaunchingWithOptions: function
+
+    #ifdef MEMTEST_ON
+    [NSObject turnMemCheckOn];
+    #endif
+
 All actions should be run through parser: 
 
     po [parser run:@"your action"]. 
