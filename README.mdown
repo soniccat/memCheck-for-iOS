@@ -1,10 +1,11 @@
-That's new edition of documentation. A old edition also works but shouldn't be used.
 
-MemCheck helps to find memory leaks in your iOS applications. It can register alloc, retain and release call for NS-objects and show detail information in console.
+MemCheck helps to find memory leaks in your iOS applications. It can register alloc, retain and release calls for NS-objects and show detail information in console.
+
+That's new edition of documentation. A old edition also works but shouldn't be used.
 
 ### Connect library
 
-Add files from Classes folder to your project expect memCheckAppDelegate and memCheckViewController.
+Add files from memCheckLib folder to your project.
 
 add in the tail of your pch file
 
@@ -28,7 +29,7 @@ An argument describes which list of objects you want to use.
 **all** - live objects which wasn't deallocated  
 **dead** - deallocated objects  
 **heap %Number** - live objects for a specified heap  
-**leaks** - leaked objects
+**leaks** - suggested leaked objects
 
 You can combine several arguments using '+' symbol. For example: heap 1 + heap 2.
 
@@ -103,6 +104,10 @@ Print all allocated objects:
 
     po [parser run:@"all print"]
 
+Print the suggested leaked objects which have less than 5 owners:
+
+    po [parser run:@"leaks withOwnersLessThan 5 print"]
+
 A most useful command to save information about your leaks:
 
     po [parser run:@"leaks fromList withOwners withOwnersLessThan 5 without UIImage saveGraph /Users/yourname/Documents/dot/mem.txt"]
@@ -118,7 +123,7 @@ It will show a graph with objects, relations between them and marks of heaps.
 ![dot graph](./memCheck-for-iOS/raw/master/images/pic1.png)
 pic 1 
 
-Timeline and mark of heap is displayed at left part in picture. 
+Timeline and mark of heap is displayed at left part in the picture. 
 
 ![dot graph](./memCheck-for-iOS/raw/master/images/pic2.png)
 pic 2
@@ -126,6 +131,11 @@ pic 2
 An arrow from the DetailViewController to the UILabel means that an object of DetailViewController contains an object of UILabel. A dotted arrow shows when an object dead. Live objects have a white background, dead objects have a gray background.
 
 The first pointer of object reference to an object of NSMemCheckObject. The second pointer reference on object directly. 
+
+There is generated image for memCheck.xcodeproj:
+
+![dot graph](./memCheck-for-iOS/raw/master/images/pic3.png)
+pic 3
 
 ###Using with ARC###
 Hmm, may be that is useful but I don't know. To allow that set -fno-objc-arc for all library files. For full description please see http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project.
@@ -141,3 +151,5 @@ After run action sometimes you may see the message
     Evaluation of the expression containing the function (objc_msgSend) will be abandoned.
 
 press continue to continue action. If action was blocked repeat it.
+
+Library can't register toll-free bridge objects (NSArray, NSDictionary, NSNumber and other).
