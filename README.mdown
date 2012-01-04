@@ -116,7 +116,7 @@ A most useful command to save information about your leaks:
 ###Using saveGraph command###
 A saveGraph command creates a text file. In the above example its name is "mem.txt". To convert the file to a dot file we should run the next script: 
 
-    dot -Tdot mem.txt -o mem.dot && open ./mem.dot. 
+    dot -Tdot mem.txt -o mem.dot && open ./mem.dot 
 
 It will show a graph with objects, relations between them and marks of heaps. 
 
@@ -153,3 +153,5 @@ After run action sometimes you may see the message
 press continue to continue action. If action was blocked repeat it.
 
 Library can't register toll-free bridge objects (NSArray, NSDictionary, NSNumber and other).
+
+Library registers objects relation through property only.
