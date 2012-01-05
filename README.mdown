@@ -69,7 +69,7 @@ You can combine several commands after a gap. All commands will not change the l
 ###Using###
 To call an action you should pause your application in the Xcode debugger and type po [parser run:@"your action"] and press the "Enter". But a result will not be displayed immediately. The action will be started when you press the continue button. To stop automatically when the action will be finished you should add a breakpoint at the end of the parse: function in NSMemCheckParser.m. 
 
-A description of objects
+###A description of objects###
 The library wraps an allocated object in NSMemCheckObject. There is a description for one of them:
 
     2011-12-11 11:56:04 +0000 memCheckObject 0x68d0fd0 object 0x68cef80 stack 0x0 DEAD UILabel  
