@@ -180,8 +180,6 @@ RELEASE_METHOD_EXCHANGE
         classesToFilter = [[NSSet alloc] initWithArray:[NSArray arrayWithObjects: CLASSES_TO_FILTER, nil]];
     }
     
-    //InstallUncaughtExceptionHandler();
-    
 	//alloc
     if(!classAllocMethod)
         classAllocMethod = class_getClassMethod([NSObject class], @selector(alloc) );
@@ -267,31 +265,24 @@ RELEASE_METHOD_EXCHANGE
 
 + (id) myAllocFunc
 {
-	//call base implement
+	//call base implementation
 	OverrideMemCheckPrototipe f = (OverrideMemCheckPrototipe)classAllocImp;
 	id newPt = f(self,@selector(myAllocFunc));
 	
 	@synchronized( [NSObject class] )
-	{		
-		BOOL found = NO;
-		for( NSMemCheckObject* obj in memData )
-			if( obj.pointerValue == newPt )
-			{
-				found = YES;
-				break;
-			}
+	{	
+        BOOL found = [memData memCheckObjectByPointer:newPt] != nil;
 		
+        [NSObject turnMemCheckOff];
+        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+        
 		if( !found && ![classesToFilter containsObject: NSStringFromClass([newPt class]) ] )
 		{
-			[NSObject turnMemCheckOff];
-			NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-			
             //printf("insert %p\n", newPt);
 			NSMemCheckObject* addObj = [[[NSMemCheckObject alloc] initWithPointer:newPt] autorelease];
 			[memData insertObject:addObj atIndex:0];
 			
 			//hack to get call stack
-			
 			@try 
 			{
 				@throw [NSException exceptionWithName:@"memTestException" 
@@ -302,10 +293,10 @@ RELEASE_METHOD_EXCHANGE
 			{
 				addObj.allocCallStack = [e callStackSymbols];
 			}
-			
-			[pool release];
-            [NSObject turnMemCheckOn];
 		}
+        
+        [pool release];
+        [NSObject turnMemCheckOn];
 	}
 	
 	return newPt;
@@ -319,11 +310,8 @@ RELEASE_METHOD_EXCHANGE
     objc_property_t* poperties = class_copyPropertyList( NSClassFromString( memObj.className ), &propCount );
     
     
-    //if( ![NSStringFromClass( [self class] ) isEqualToString:@"SBJsonStreamParserAccumulator"]  )
     if( ![NSStringFromClass( [self class] ) isEqualToString:@"DelegatesContainer"]  )
     if( ![NSStringFromClass( [self class] ) isEqualToString:@"UIGestureDelayedTouch"]  )
-    //if( ![NSStringFromClass( [self class] ) isEqualToString:@"UITapGestureRecognizer"]  )
-            
     for (int a=0; a<propCount; a++) 
     {
         objc_property_t *thisProperty = poperties + a;
@@ -331,7 +319,7 @@ RELEASE_METHOD_EXCHANGE
         const char* propertyAttributes = property_getAttributes(*thisProperty);
         
         NSString *key = [[[NSString alloc] initWithFormat:@"%s", propertyName] autorelease];
-        //NSString *keyAttributes = [[NSString alloc] initWithFormat:@"%s", propertyAttributes];
+        //NSString *keyAttributes = [[[NSString alloc] initWithFormat:@"%s", propertyAttributes] autorelease];
         
         //NSLog(key);
         //NSLog(keyAttributes);
@@ -339,8 +327,6 @@ RELEASE_METHOD_EXCHANGE
         NSInteger len = strlen(propertyAttributes);
         if( strlen(propertyAttributes) < 2 || propertyAttributes[1]!= '@' )
         {
-            //[key release];
-            //[keyAttributes release];
             continue;
         }
         
@@ -350,7 +336,6 @@ RELEASE_METHOD_EXCHANGE
             {
                 foundIsRetain = YES;
                 break;
-                
             }
         
         if(!foundIsRetain)
@@ -367,13 +352,14 @@ RELEASE_METHOD_EXCHANGE
             
             id returnObj = nil;
             
-            @try {
+            @try 
+            {
                 [invocation invoke];
                 [invocation getReturnValue:(void **)&returnObj];
             }
-            @catch (NSException *exception) {
+            @catch (NSException *exception) 
+            {
                 printf("invoke exception");
-                //NSLog(@"DumpCommand.mapObjectToPropertiesDictionary caught %@: %@", [exception name], [exception reason]);
                 continue;
             }
             
@@ -381,22 +367,23 @@ RELEASE_METHOD_EXCHANGE
             if( returnObj != nil )
             {
                 //look in memory
-                NSMemCheckObject* memObj2 = [memData memCheckObjectByPointer:returnObj];
+                NSMemCheckObject* propertyMemObj = [memData memCheckObjectByPointer:returnObj];
                 
-                if( ![classesToFilter containsObject: memObj2.className ] )
+                if( ![classesToFilter containsObject: propertyMemObj.className ] && !propertyMemObj.isDead )
                 {
-                    if( memObj2)
+                    if( propertyMemObj)
                     {
-                        if( ![memObj2.owners containsObject:memObj] && !memObj2.isDead /*&& [memObj.pointerValue retainCount] >= 1*/ )
+                        //add relation
+                        if( ![propertyMemObj.owners containsObject:memObj] )
                         {  
-                            [memObj2 addOwner: [NSMemCheckOwnerInfo memCheckOwnerInfoWithPropertyName:key object:memObj]];
-                            //[memObj2.owners addObject:[NSString stringWithFormat:@"[%@ %p %@]",memObj.className, self, key]];
+                            [propertyMemObj addOwner: [NSMemCheckOwnerInfo memCheckOwnerInfoWithPropertyName:key object:memObj]];
                         }
                         
                         if( [self retainCount] == 1 )
                         { 
-                            if(![suggestedLeaks containsObject:memObj2])
-                                [suggestedLeaks addObject:memObj2];
+                            //suggest a leak
+                            if(![suggestedLeaks containsObject:propertyMemObj])
+                                [suggestedLeaks addObject:propertyMemObj];
                         }
                     }else
                     {
@@ -411,23 +398,16 @@ RELEASE_METHOD_EXCHANGE
                             
                             if( [self retainCount] == 1 )
                             {
-                                //search other owner
+                                //suggest a leak
                                 if(![suggestedLeaks containsObject:obj])
                                     [suggestedLeaks addObject:obj];
                             }
                         }
                     }
                 }
-                    
-                    
-                //if( [returnObj isKindOfClass:[NSObject class]] )
-                //    printf( "%p", returnObj );
             }
+            
         }
-        
-        
-        //[key release];
-        //[keyAttributes release];
     }
 }
 
@@ -441,24 +421,11 @@ RELEASE_METHOD_EXCHANGE
         
 		int i = 0;
         //NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-        
-        /*
-        if( [self isKindOfClass:NSClassFromString(@"CategoryPresentViewController")] )
-        {
-            printf(":)");
-        }
-        */
-        
-        BOOL needLookInSuggestedLeaks = NO;
-                
+             
         for(NSMemCheckObject* memObj in memData)
-		{	
-            //[(NSMemCheckObject*)[memData objectAtIndex:i] removeOwnerByPtr:self];
- 
+		{
 			if( memObj.pointerValue == self )
 			{
-                needLookInSuggestedLeaks = [memObj retainCount] > 1;
-                
                 memObj.isDead = YES;
                 memObj.deadDate = [NSDate date];
                 
@@ -470,21 +437,18 @@ RELEASE_METHOD_EXCHANGE
 			++i;
 		}
         
-        if(needLookInSuggestedLeaks)
-        {
-            NSInteger suggestIndex = 0;
-            for(NSMemCheckObject* s in suggestedLeaks)
-            {
-                if( s.pointerValue == self )
-                {
-                    [suggestedLeaks removeObjectAtIndex:suggestIndex];
-                    break;
-                }
-                
-                ++suggestIndex;
-            }
-        }
         
+        NSInteger suggestIndex = 0;
+        for(NSMemCheckObject* s in suggestedLeaks)
+        {
+            if( s.pointerValue == self )
+            {
+                [suggestedLeaks removeObjectAtIndex:suggestIndex];
+                break;
+            }
+            
+            ++suggestIndex;
+        }
         
         //[pool release];
         
@@ -613,7 +577,6 @@ RELEASE_METHOD_EXCHANGE
 	{
         [NSObject turnMemCheckOff];
         
-        //new logic
         NSMemCheckObject* addObj = [memData memCheckObjectByPointer:self];
         if(addObj)
             addObj.autoreleaseCallCount ++;

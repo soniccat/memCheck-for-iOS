@@ -339,7 +339,7 @@ typedef BOOL (^MemCheckArrayFilterBlock)(NSMemCheckObject* obj);
             NSInteger sizeOfChunk = 50;
             
             //divide dates on chunks to prevent "memory exhausted" in dot
-            while(currentChunk*sizeOfChunk < [allDates count] /*&& currentChunk != 5*/)
+            while(currentChunk*sizeOfChunk < [allDates count] )
             {
                 NSMutableArray* chunkDates = [[NSMutableArray alloc] init];
                 if( currentChunk*sizeOfChunk + sizeOfChunk < [allDates count] )
@@ -393,9 +393,6 @@ typedef BOOL (^MemCheckArrayFilterBlock)(NSMemCheckObject* obj);
                         [outString appendString: [NSMemCheckDotSupport variableNameFromMemCheckObject:obj] ];
                         [outString appendString:@";"];
                         
-                        //++itemCount;
-                        //if(itemCount > 10)
-                        //    break;
                     }else if( obj.isDead && [[NSMemCheckDotSupport variableNameFromDate:obj.deadDate] isEqualToString:dateName] )
                     {
                         [outString appendString:@" "];
