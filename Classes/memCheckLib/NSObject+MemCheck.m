@@ -391,14 +391,12 @@ RELEASE_METHOD_EXCHANGE
                         {  
                             [memObj2 addOwner: [NSMemCheckOwnerInfo memCheckOwnerInfoWithPropertyName:key object:memObj]];
                             //[memObj2.owners addObject:[NSString stringWithFormat:@"[%@ %p %@]",memObj.className, self, key]];
-                            
-                            if( [self retainCount] == 1 )
-                            {
-                                //search other owner
-                                
-                                if(![suggestedLeaks containsObject:memObj2])
-                                    [suggestedLeaks addObject:memObj2];
-                            }
+                        }
+                        
+                        if( [self retainCount] == 1 )
+                        { 
+                            if(![suggestedLeaks containsObject:memObj2])
+                                [suggestedLeaks addObject:memObj2];
                         }
                     }else
                     {
