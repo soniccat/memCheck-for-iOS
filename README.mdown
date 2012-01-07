@@ -137,6 +137,12 @@ There is generated image for memCheck.xcodeproj:
 ![dot graph](./memCheck-for-iOS/raw/master/images/pic3.png)
 pic 3
 
+###How the library finds leaks###
+
+The library have two arrays. A memData array contains all allocated objects. A suggestedLeaks contains objects which I think is leaked.
+
+Before a release call in a object I perform the next operations. I scan all retain properties in the object. If the object has one retain count I will put all his properties' object in the suggestedLeaks array. I do that because I make suggestion that programmer forgot add release call in the dealloc method of the object. If I am wrong an added object will be removed from the suggestedLeaks array when it dealloc will be called. In short that means that all objects which owners was deallocated are suggested leaked. Yes that's rough method but in practice it's a perfect filter of unnecessary object. But the library will display some live objects on the top of a graph.
+
 ###Using with ARC###
 Hmm, may be that is useful but I don't know. To allow that set -fno-objc-arc for all library files. For full description please see http://stackoverflow.com/questions/6646052/how-can-i-disable-arc-for-a-single-file-in-a-project.
 
